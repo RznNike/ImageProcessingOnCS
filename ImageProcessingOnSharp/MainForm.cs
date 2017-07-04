@@ -67,8 +67,23 @@ namespace ImageProcessingOnSharp
                 long qualityLevel = (long)nudQualityLevel.Value;
                 Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
+                rtbStatistic.Text = this.MakeReport(compressedImage, "");
             }
             pboxResult.Image = new Bitmap(_resultImage);
+        }
+
+        private string MakeReport(Stream parCompressedImage, string parAlgorithmParameters)
+        {
+            StringBuilder report = new StringBuilder();
+            report.AppendLine(String.Format("Original image size: {0} bytes", _originalImage.Length));
+            report.AppendLine(String.Format("Compressed image size: {0} bytes", parCompressedImage.Length));
+            report.AppendLine(String.Format("Decompressed image size: {0} bytes", _resultImage.Length));
+            report.AppendLine(String.Format("Algorithm: {0}", cmbAlgorithm.SelectedItem));
+            report.AppendLine(String.Format("Parameters: {0}", parAlgorithmParameters));
+            double accuracy = ImageComparator.CalculateImagesEquality(_originalImage, _resultImage);
+            report.AppendLine(String.Format("Accuracy: {0}%", accuracy * 100));
+
+            return report.ToString();
         }
     }
 }

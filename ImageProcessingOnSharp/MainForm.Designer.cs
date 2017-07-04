@@ -35,7 +35,6 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.pboxOriginal = new System.Windows.Forms.PictureBox();
             this.pboxResult = new System.Windows.Forms.PictureBox();
@@ -52,6 +51,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label5 = new System.Windows.Forms.Label();
             this.nudQualityLevel = new System.Windows.Forms.NumericUpDown();
+            this.rtbStatistic = new System.Windows.Forms.RichTextBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -163,7 +163,7 @@
             // groupBox1
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox1, 5);
-            this.groupBox1.Controls.Add(this.flowLayoutPanel2);
+            this.groupBox1.Controls.Add(this.rtbStatistic);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.groupBox1.Location = new System.Drawing.Point(3, 434);
             this.groupBox1.Name = "groupBox1";
@@ -171,14 +171,6 @@
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistic:";
-            // 
-            // flowLayoutPanel2
-            // 
-            this.flowLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(3, 16);
-            this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(677, 56);
-            this.flowLayoutPanel2.TabIndex = 1;
             // 
             // label1
             // 
@@ -351,6 +343,17 @@
             0,
             0});
             // 
+            // rtbStatistic
+            // 
+            this.rtbStatistic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbStatistic.Location = new System.Drawing.Point(3, 16);
+            this.rtbStatistic.Name = "rtbStatistic";
+            this.rtbStatistic.ReadOnly = true;
+            this.rtbStatistic.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.rtbStatistic.Size = new System.Drawing.Size(677, 56);
+            this.rtbStatistic.TabIndex = 1;
+            this.rtbStatistic.Text = "";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -404,7 +407,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolStripMenuItem tsActions;
         private System.Windows.Forms.ToolStripMenuItem tsmApplyAlgorithm;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox cmbAlgorithm;
@@ -413,6 +415,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.NumericUpDown nudQualityLevel;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.RichTextBox rtbStatistic;
     }
 }
 
