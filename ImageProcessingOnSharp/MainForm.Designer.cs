@@ -49,6 +49,9 @@
             this.cmbAlgorithm = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.nudQualityLevel = new System.Windows.Forms.NumericUpDown();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -57,6 +60,8 @@
             this.groupBox2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -125,6 +130,7 @@
             this.tsmApplyAlgorithm.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.A)));
             this.tsmApplyAlgorithm.Size = new System.Drawing.Size(202, 22);
             this.tsmApplyAlgorithm.Text = "Apply algorithm";
+            this.tsmApplyAlgorithm.Click += new System.EventHandler(this.tsmApplyAlgorithm_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -257,6 +263,7 @@
             this.btnApplyAlgorithm.Text = "apply algorithm & back";
             this.btnApplyAlgorithm.UseMnemonic = false;
             this.btnApplyAlgorithm.UseVisualStyleBackColor = true;
+            this.btnApplyAlgorithm.Click += new System.EventHandler(this.tsmApplyAlgorithm_Click);
             // 
             // groupBox2
             // 
@@ -273,6 +280,7 @@
             // flowLayoutPanel1
             // 
             this.flowLayoutPanel1.Controls.Add(this.panel1);
+            this.flowLayoutPanel1.Controls.Add(this.panel2);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -307,6 +315,42 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Algorithm:";
             // 
+            // panel2
+            // 
+            this.panel2.AutoSize = true;
+            this.panel2.Controls.Add(this.nudQualityLevel);
+            this.panel2.Controls.Add(this.label5);
+            this.panel2.Location = new System.Drawing.Point(195, 3);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(95, 28);
+            this.panel2.TabIndex = 1;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(42, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Quality:";
+            // 
+            // nudQualityLevel
+            // 
+            this.nudQualityLevel.Location = new System.Drawing.Point(51, 5);
+            this.nudQualityLevel.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudQualityLevel.Name = "nudQualityLevel";
+            this.nudQualityLevel.Size = new System.Drawing.Size(41, 20);
+            this.nudQualityLevel.TabIndex = 1;
+            this.nudQualityLevel.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -331,6 +375,9 @@
             this.flowLayoutPanel1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,6 +410,9 @@
         private System.Windows.Forms.ComboBox cmbAlgorithm;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.NumericUpDown nudQualityLevel;
+        private System.Windows.Forms.Label label5;
     }
 }
 

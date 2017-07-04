@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -46,18 +47,28 @@ namespace ImageProcessingOnSharp
 
         private void tsmSaveResult_Click(object sender, EventArgs e)
         {
+            saveFileDialog.FileName = openFileDialog.FileName + ".bmp";
             saveFileDialog.ShowDialog();
             try
             {
-                byte[ ] image = new byte[_resultImage.Length];
-                _resultImage.Read(image, 0, ( int )_resultImage.Length);
-                string path = saveFileDialog.FileName;
-                File.WriteAllBytes(saveFileDialog.FileName, image);
+                pboxResult.Image.Save(saveFileDialog.FileName, ImageFormat.Bmp);
             }
             catch
             {
                 MessageBox.Show("Can't save image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+        }
+
+        private void tsmApplyAlgorithm_Click(object sender, EventArgs e)
+        {
+            Algorithm algorithm = (Algorithm)cmbAlgorithm.SelectedItem;
+            if (algorithm.ToString().Equals("JPEG"))
+            {
+                long qualityLevel = (long)nudQualityLevel.Value;
+                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
+                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
+            }
+            pboxResult.Image = new Bitmap(_resultImage);
         }
     }
 }
