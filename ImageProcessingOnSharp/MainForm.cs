@@ -44,38 +44,54 @@ namespace ImageProcessingOnSharp
 
         private void tsmOpenImage_Click(object sender, EventArgs e)
         {
-            openFileDialog.ShowDialog();
-            try
+            DialogResult choice = openFileDialog.ShowDialog();
+            if (choice == DialogResult.OK)
             {
-                _originalImage = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName));
+                try
+                {
+                    _originalImage = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName));
 
-                pboxOriginal.Image = new Bitmap(_originalImage);
-            }
-            catch
-            {
-                MessageBox.Show("Can't open image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    pboxOriginal.Image = new Bitmap(_originalImage);
+                }
+                catch
+                {
+                    MessageBox.Show("Can't open image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
         private void tsmSaveResult_Click(object sender, EventArgs e)
         {
+            if (_resultImage == null)
+            {
+                return;
+            }
+
             saveFileDialog.DefaultExt = _resultExtension;
             saveFileDialog.Filter = String.Format("Изображение|*.{0}", _resultExtension);
             saveFileDialog.FileName = String.Format("{0}.{1}", openFileDialog.FileName, _resultExtension);
-            saveFileDialog.ShowDialog();
-            try
+            DialogResult choice = saveFileDialog.ShowDialog();
+            if (choice == DialogResult.OK)
             {
-                Image image = Image.FromStream(_resultImage);
-                image.Save(saveFileDialog.FileName);
-            }
-            catch
-            {
-                MessageBox.Show("Can't save image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                try
+                {
+                    Image image = Image.FromStream(_resultImage);
+                    image.Save(saveFileDialog.FileName);
+                }
+                catch
+                {
+                    MessageBox.Show("Can't save image.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 
         private void tsmApplyAlgorithm_Click(object sender, EventArgs e)
         {
+            if (_originalImage == null)
+            {
+                return;
+            }
+
             Algorithm algorithm = (Algorithm)cmbAlgorithm.SelectedItem;
             if (algorithm.ToString().Equals("JPEG"))
             {
@@ -122,6 +138,12 @@ namespace ImageProcessingOnSharp
             {
                 panelQuality.Visible = false;
             }
+        }
+
+        private void tsAbout_Click(object sender, EventArgs e)
+        {
+            AboutForm form = new AboutForm();
+            form.ShowDialog();
         }
     }
 }

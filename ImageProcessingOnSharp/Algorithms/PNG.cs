@@ -28,8 +28,8 @@ namespace ImageProcessingOnSharp
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
             //long qualityLevel = (long)parArguments[0];
-            EncoderParameters parameters = new EncoderParameters(2);
-            //parameters.Param[0] = new EncoderParameter(Encoder.Quality, qualityLevel);
+            EncoderParameters parameters = new EncoderParameters();
+            parameters.Param[0] = new EncoderParameter(Encoder.Quality, 100);
             ImageCodecInfo[ ] codecInfos = ImageCodecInfo.GetImageEncoders();
             ImageCodecInfo pngInfo = null;
             foreach (ImageCodecInfo info in codecInfos)
