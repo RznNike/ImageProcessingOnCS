@@ -42,8 +42,6 @@ namespace ImageProcessingOnSharp
             Stream result = new MemoryStream();
             Bitmap tempImage = new Bitmap(parOriginalImage);
             tempImage.Save(result, codecInfos[1], parameters);
-            //tempImage.Save(result, ImageFormat.Jpeg);
-            //tempImage.Save(result, jpegInfo, parameters);
             return result;
         }
 
