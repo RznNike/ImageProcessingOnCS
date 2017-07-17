@@ -16,6 +16,7 @@ namespace ImageProcessingOnSharp
     {
         Stream _originalImage;
         Stream _resultImage;
+        String _resultExtension;
 
         public MainForm()
         {
@@ -23,6 +24,8 @@ namespace ImageProcessingOnSharp
             cmbAlgorithm.Items.Clear();
             cmbAlgorithm.Items.Add(JPEG.GetInstance());
             cmbAlgorithm.SelectedIndex = 0;
+
+            _resultExtension = null;
         }
 
         private void tsmExit_Click(object sender, EventArgs e)
@@ -47,11 +50,14 @@ namespace ImageProcessingOnSharp
 
         private void tsmSaveResult_Click(object sender, EventArgs e)
         {
-            saveFileDialog.FileName = openFileDialog.FileName + ".bmp";
+            saveFileDialog.DefaultExt = _resultExtension;
+            saveFileDialog.Filter = String.Format("Изображение|*.{0}", _resultExtension);
+            saveFileDialog.FileName = String.Format("{0}.{1}", openFileDialog.FileName, _resultExtension);
             saveFileDialog.ShowDialog();
             try
             {
-                pboxResult.Image.Save(saveFileDialog.FileName, ImageFormat.Bmp);
+                Image image = Image.FromStream(_resultImage);
+                image.Save(saveFileDialog.FileName);
             }
             catch
             {
@@ -70,6 +76,7 @@ namespace ImageProcessingOnSharp
                 rtbStatistic.Text = this.MakeReport(compressedImage, "");
             }
             pboxResult.Image = new Bitmap(_resultImage);
+            _resultExtension = algorithm.GetFileExtension();
         }
 
         private string MakeReport(Stream parCompressedImage, string parAlgorithmParameters)

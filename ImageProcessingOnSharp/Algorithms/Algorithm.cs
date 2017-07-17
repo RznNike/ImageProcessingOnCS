@@ -9,5 +9,7 @@ namespace ImageProcessingOnSharp
         public abstract Stream CompressImage(Stream parOriginalImage, List<Object> parArguments);
 
         public abstract Stream DecompressImage(Stream parCompressedImage, List<Object> parArguments);
+
+        public abstract String GetFileExtension();
     }
 }

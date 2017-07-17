@@ -50,6 +50,11 @@ namespace ImageProcessingOnSharp
             return parCompressedImage;
         }
 
+        public override string GetFileExtension()
+        {
+            return "jpeg";
+        }
+
         public override string ToString()
         {
             return "JPEG";
