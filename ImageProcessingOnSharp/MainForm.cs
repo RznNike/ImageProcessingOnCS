@@ -23,7 +23,16 @@ namespace ImageProcessingOnSharp
             InitializeComponent();
             cmbAlgorithm.Items.Clear();
             cmbAlgorithm.Items.Add(JPEG.GetInstance());
+            cmbAlgorithm.Items.Add(PNG.GetInstance());
             cmbAlgorithm.SelectedIndex = 0;
+
+            cmbCompression.Items.Clear();
+            cmbCompression.Items.Add("LZW");
+            cmbCompression.Items.Add("CCITT3");
+            cmbCompression.Items.Add("CCITT4");
+            cmbCompression.Items.Add("RLE");
+            cmbCompression.Items.Add("None");
+            cmbCompression.SelectedIndex = 0;
 
             _resultExtension = null;
         }
@@ -75,6 +84,13 @@ namespace ImageProcessingOnSharp
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
                 rtbStatistic.Text = this.MakeReport(compressedImage, "");
             }
+            else if (algorithm.ToString().Equals("PNG"))
+            {
+                long qualityLevel = (long)nudQualityLevel.Value;
+                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>());
+                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
+                rtbStatistic.Text = this.MakeReport(compressedImage, "");
+            }
             pboxResult.Image = new Bitmap(_resultImage);
             _resultExtension = algorithm.GetFileExtension();
         }
@@ -85,12 +101,27 @@ namespace ImageProcessingOnSharp
             report.AppendLine(String.Format("Original image size: {0} bytes", _originalImage.Length));
             report.AppendLine(String.Format("Compressed image size: {0} bytes", parCompressedImage.Length));
             report.AppendLine(String.Format("Decompressed image size: {0} bytes", _resultImage.Length));
+            double compression = (_originalImage.Length - parCompressedImage.Length) * 100.0 / _originalImage.Length;
+            report.AppendLine(String.Format("Total compression: {0}%", compression));
             report.AppendLine(String.Format("Algorithm: {0}", cmbAlgorithm.SelectedItem));
             report.AppendLine(String.Format("Parameters: {0}", parAlgorithmParameters));
             double accuracy = ImageComparator.CalculateImagesEquality(_originalImage, _resultImage);
             report.AppendLine(String.Format("Accuracy: {0}%", accuracy * 100));
 
             return report.ToString();
+        }
+
+        private void cmbAlgorithm_SelectedValueChanged(object sender, EventArgs e)
+        {
+            string option = cmbAlgorithm.SelectedItem.ToString();
+            if (option.Equals("JPEG"))
+            {
+                panelQuality.Visible = true;
+            }
+            else if (option.Equals("PNG"))
+            {
+                panelQuality.Visible = false;
+            }
         }
     }
 }

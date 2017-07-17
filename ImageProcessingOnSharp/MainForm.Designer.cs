@@ -35,6 +35,7 @@
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.rtbStatistic = new System.Windows.Forms.RichTextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pboxOriginal = new System.Windows.Forms.PictureBox();
             this.pboxResult = new System.Windows.Forms.PictureBox();
@@ -44,14 +45,16 @@
             this.btnApplyAlgorithm = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelAlgorithm = new System.Windows.Forms.Panel();
             this.cmbAlgorithm = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
+            this.panelQuality = new System.Windows.Forms.Panel();
             this.nudQualityLevel = new System.Windows.Forms.NumericUpDown();
-            this.rtbStatistic = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.panelCompression = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.cmbCompression = new System.Windows.Forms.ComboBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -59,9 +62,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pboxResult)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.panelAlgorithm.SuspendLayout();
+            this.panelQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).BeginInit();
+            this.panelCompression.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -172,6 +176,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistic:";
             // 
+            // rtbStatistic
+            // 
+            this.rtbStatistic.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.rtbStatistic.Location = new System.Drawing.Point(3, 16);
+            this.rtbStatistic.Name = "rtbStatistic";
+            this.rtbStatistic.ReadOnly = true;
+            this.rtbStatistic.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
+            this.rtbStatistic.Size = new System.Drawing.Size(677, 56);
+            this.rtbStatistic.TabIndex = 1;
+            this.rtbStatistic.Text = "";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -271,23 +286,24 @@
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.Controls.Add(this.panel1);
-            this.flowLayoutPanel1.Controls.Add(this.panel2);
+            this.flowLayoutPanel1.Controls.Add(this.panelAlgorithm);
+            this.flowLayoutPanel1.Controls.Add(this.panelQuality);
+            this.flowLayoutPanel1.Controls.Add(this.panelCompression);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(677, 68);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
-            // panel1
+            // panelAlgorithm
             // 
-            this.panel1.AutoSize = true;
-            this.panel1.Controls.Add(this.cmbAlgorithm);
-            this.panel1.Controls.Add(this.label4);
-            this.panel1.Location = new System.Drawing.Point(3, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(186, 28);
-            this.panel1.TabIndex = 0;
+            this.panelAlgorithm.AutoSize = true;
+            this.panelAlgorithm.Controls.Add(this.cmbAlgorithm);
+            this.panelAlgorithm.Controls.Add(this.label4);
+            this.panelAlgorithm.Location = new System.Drawing.Point(3, 3);
+            this.panelAlgorithm.Name = "panelAlgorithm";
+            this.panelAlgorithm.Size = new System.Drawing.Size(186, 28);
+            this.panelAlgorithm.TabIndex = 0;
             // 
             // cmbAlgorithm
             // 
@@ -297,6 +313,7 @@
             this.cmbAlgorithm.Name = "cmbAlgorithm";
             this.cmbAlgorithm.Size = new System.Drawing.Size(121, 21);
             this.cmbAlgorithm.TabIndex = 1;
+            this.cmbAlgorithm.SelectedValueChanged += new System.EventHandler(this.cmbAlgorithm_SelectedValueChanged);
             // 
             // label4
             // 
@@ -307,28 +324,19 @@
             this.label4.TabIndex = 0;
             this.label4.Text = "Algorithm:";
             // 
-            // panel2
+            // panelQuality
             // 
-            this.panel2.AutoSize = true;
-            this.panel2.Controls.Add(this.nudQualityLevel);
-            this.panel2.Controls.Add(this.label5);
-            this.panel2.Location = new System.Drawing.Point(195, 3);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(95, 28);
-            this.panel2.TabIndex = 1;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(3, 7);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(42, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Quality:";
+            this.panelQuality.AutoSize = true;
+            this.panelQuality.Controls.Add(this.nudQualityLevel);
+            this.panelQuality.Controls.Add(this.label5);
+            this.panelQuality.Location = new System.Drawing.Point(195, 3);
+            this.panelQuality.Name = "panelQuality";
+            this.panelQuality.Size = new System.Drawing.Size(90, 28);
+            this.panelQuality.TabIndex = 1;
             // 
             // nudQualityLevel
             // 
-            this.nudQualityLevel.Location = new System.Drawing.Point(51, 5);
+            this.nudQualityLevel.Location = new System.Drawing.Point(46, 5);
             this.nudQualityLevel.Minimum = new decimal(new int[] {
             1,
             0,
@@ -343,16 +351,42 @@
             0,
             0});
             // 
-            // rtbStatistic
+            // label5
             // 
-            this.rtbStatistic.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.rtbStatistic.Location = new System.Drawing.Point(3, 16);
-            this.rtbStatistic.Name = "rtbStatistic";
-            this.rtbStatistic.ReadOnly = true;
-            this.rtbStatistic.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.rtbStatistic.Size = new System.Drawing.Size(677, 56);
-            this.rtbStatistic.TabIndex = 1;
-            this.rtbStatistic.Text = "";
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(3, 7);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(42, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Quality:";
+            // 
+            // panelCompression
+            // 
+            this.panelCompression.AutoSize = true;
+            this.panelCompression.Controls.Add(this.cmbCompression);
+            this.panelCompression.Controls.Add(this.label6);
+            this.panelCompression.Location = new System.Drawing.Point(291, 3);
+            this.panelCompression.Name = "panelCompression";
+            this.panelCompression.Size = new System.Drawing.Size(146, 28);
+            this.panelCompression.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 7);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Compression:";
+            // 
+            // cmbCompression
+            // 
+            this.cmbCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCompression.FormattingEnabled = true;
+            this.cmbCompression.Location = new System.Drawing.Point(71, 4);
+            this.cmbCompression.Name = "cmbCompression";
+            this.cmbCompression.Size = new System.Drawing.Size(72, 21);
+            this.cmbCompression.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -376,11 +410,13 @@
             this.groupBox2.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.panelAlgorithm.ResumeLayout(false);
+            this.panelAlgorithm.PerformLayout();
+            this.panelQuality.ResumeLayout(false);
+            this.panelQuality.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).EndInit();
+            this.panelCompression.ResumeLayout(false);
+            this.panelCompression.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -408,14 +444,17 @@
         private System.Windows.Forms.ToolStripMenuItem tsActions;
         private System.Windows.Forms.ToolStripMenuItem tsmApplyAlgorithm;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelAlgorithm;
         private System.Windows.Forms.ComboBox cmbAlgorithm;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.SaveFileDialog saveFileDialog;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panelQuality;
         private System.Windows.Forms.NumericUpDown nudQualityLevel;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.RichTextBox rtbStatistic;
+        private System.Windows.Forms.Panel panelCompression;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.ComboBox cmbCompression;
     }
 }
 

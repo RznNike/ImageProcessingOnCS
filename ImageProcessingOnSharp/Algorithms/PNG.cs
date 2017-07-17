@@ -8,40 +8,40 @@ using System.Threading.Tasks;
 
 namespace ImageProcessingOnSharp
 {
-    public class JPEG : Algorithm
+    public class PNG : Algorithm
     {
-        private static JPEG _instance = null;
+        private static PNG _instance = null;
 
-        private JPEG()
+        private PNG()
         {
         }
-        
-        public static JPEG GetInstance()
+
+        public static PNG GetInstance()
         {
             if (_instance == null)
             {
-                _instance = new JPEG();
+                _instance = new PNG();
             }
             return _instance;
         }
 
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
-            long qualityLevel = (long)parArguments[0];
-            EncoderParameters parameters = new EncoderParameters();
-            parameters.Param[0] = new EncoderParameter(Encoder.Quality, qualityLevel);
-            ImageCodecInfo[] codecInfos = ImageCodecInfo.GetImageEncoders();
-            ImageCodecInfo jpegInfo = null;
+            //long qualityLevel = (long)parArguments[0];
+            EncoderParameters parameters = new EncoderParameters(2);
+            //parameters.Param[0] = new EncoderParameter(Encoder.Quality, qualityLevel);
+            ImageCodecInfo[ ] codecInfos = ImageCodecInfo.GetImageEncoders();
+            ImageCodecInfo pngInfo = null;
             foreach (ImageCodecInfo info in codecInfos)
             {
-                if (info.FormatDescription.Equals("JPEG"))
+                if (info.FormatDescription.Equals("PNG"))
                 {
-                    jpegInfo = info;
+                    pngInfo = info;
                 }
             }
             Stream result = new MemoryStream();
             Bitmap tempImage = new Bitmap(parOriginalImage);
-            tempImage.Save(result, jpegInfo, parameters);
+            tempImage.Save(result, pngInfo, parameters);
             return result;
         }
 
@@ -52,12 +52,12 @@ namespace ImageProcessingOnSharp
 
         public override string GetFileExtension()
         {
-            return "jpeg";
+            return "png";
         }
 
         public override string ToString()
         {
-            return "JPEG";
+            return "PNG";
         }
     }
 }
