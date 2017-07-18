@@ -56,9 +56,9 @@
             this.cmbCompression = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.panelColorDepth = new System.Windows.Forms.Panel();
-            this.nudColorDepth = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.cmbColorDepth = new System.Windows.Forms.ComboBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -71,7 +71,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).BeginInit();
             this.panelCompression.SuspendLayout();
             this.panelColorDepth.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudColorDepth)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -406,35 +405,12 @@
             // panelColorDepth
             // 
             this.panelColorDepth.AutoSize = true;
-            this.panelColorDepth.Controls.Add(this.nudColorDepth);
+            this.panelColorDepth.Controls.Add(this.cmbColorDepth);
             this.panelColorDepth.Controls.Add(this.label7);
-            this.panelColorDepth.Enabled = false;
             this.panelColorDepth.Location = new System.Drawing.Point(444, 3);
             this.panelColorDepth.Name = "panelColorDepth";
-            this.panelColorDepth.Size = new System.Drawing.Size(112, 28);
+            this.panelColorDepth.Size = new System.Drawing.Size(117, 28);
             this.panelColorDepth.TabIndex = 3;
-            // 
-            // nudColorDepth
-            // 
-            this.nudColorDepth.Location = new System.Drawing.Point(68, 5);
-            this.nudColorDepth.Maximum = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
-            this.nudColorDepth.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudColorDepth.Name = "nudColorDepth";
-            this.nudColorDepth.Size = new System.Drawing.Size(41, 20);
-            this.nudColorDepth.TabIndex = 1;
-            this.nudColorDepth.Value = new decimal(new int[] {
-            24,
-            0,
-            0,
-            0});
             // 
             // label7
             // 
@@ -444,6 +420,15 @@
             this.label7.Size = new System.Drawing.Size(64, 13);
             this.label7.TabIndex = 0;
             this.label7.Text = "Color depth:";
+            // 
+            // cmbColorDepth
+            // 
+            this.cmbColorDepth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbColorDepth.FormattingEnabled = true;
+            this.cmbColorDepth.Location = new System.Drawing.Point(68, 4);
+            this.cmbColorDepth.Name = "cmbColorDepth";
+            this.cmbColorDepth.Size = new System.Drawing.Size(46, 21);
+            this.cmbColorDepth.TabIndex = 3;
             // 
             // MainForm
             // 
@@ -476,7 +461,6 @@
             this.panelCompression.PerformLayout();
             this.panelColorDepth.ResumeLayout(false);
             this.panelColorDepth.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudColorDepth)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -516,9 +500,9 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbCompression;
         private System.Windows.Forms.Panel panelColorDepth;
-        private System.Windows.Forms.NumericUpDown nudColorDepth;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ToolStripMenuItem tsAbout;
+        private System.Windows.Forms.ComboBox cmbColorDepth;
     }
 }
 

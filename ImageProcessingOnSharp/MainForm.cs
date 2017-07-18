@@ -35,6 +35,14 @@ namespace ImageProcessingOnSharp
             cmbCompression.Items.Add("None");
             cmbCompression.SelectedIndex = 0;
 
+            cmbColorDepth.Items.Clear();
+            cmbColorDepth.Items.Add(1L);
+            cmbColorDepth.Items.Add(4L);
+            cmbColorDepth.Items.Add(8L);
+            cmbColorDepth.Items.Add(24L);
+            cmbColorDepth.Items.Add(32L);
+            cmbColorDepth.SelectedIndex = 3;
+
             _resultExtension = null;
         }
 
@@ -103,14 +111,16 @@ namespace ImageProcessingOnSharp
             }
             else if (algorithm.ToString().Equals("PNG"))
             {
-                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { });
+                long colorDepth = (long)cmbColorDepth.SelectedItem;
+                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { colorDepth });
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
                 rtbStatistic.Text = this.MakeReport(compressedImage, "");
             }
             else if (algorithm.ToString().Equals("TIFF"))
             {
                 long compression = cmbCompression.SelectedIndex + 2;
-                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression });
+                long colorDepth = (long)cmbColorDepth.SelectedItem;
+                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression, colorDepth });
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
                 rtbStatistic.Text = this.MakeReport(compressedImage, "");
             }
@@ -141,16 +151,19 @@ namespace ImageProcessingOnSharp
             {
                 panelQuality.Visible = true;
                 panelCompression.Visible = false;
+                panelColorDepth.Visible = false;
             }
             else if (option.Equals("PNG"))
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;
+                panelColorDepth.Visible = false;
             }
             else if (option.Equals("TIFF"))
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = true;
+                panelColorDepth.Visible = true;
             }
         }
 
