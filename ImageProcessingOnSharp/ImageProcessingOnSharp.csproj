@@ -53,6 +53,7 @@
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Algorithms\Algorithm.cs" />
+    <Compile Include="Algorithms\TIFF.cs" />
     <Compile Include="Algorithms\JPEG.cs" />
     <Compile Include="ImageComparator.cs" />
     <Compile Include="MainForm.cs">

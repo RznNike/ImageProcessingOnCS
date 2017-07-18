@@ -32,6 +32,7 @@
             this.tsmExit = new System.Windows.Forms.ToolStripMenuItem();
             this.tsActions = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmApplyAlgorithm = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -51,14 +52,13 @@
             this.panelQuality = new System.Windows.Forms.Panel();
             this.nudQualityLevel = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.panelCompression = new System.Windows.Forms.Panel();
-            this.label6 = new System.Windows.Forms.Label();
             this.cmbCompression = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.panelColorDepth = new System.Windows.Forms.Panel();
             this.nudColorDepth = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
-            this.tsAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -142,6 +142,13 @@
             this.tsmApplyAlgorithm.Size = new System.Drawing.Size(202, 22);
             this.tsmApplyAlgorithm.Text = "Apply algorithm";
             this.tsmApplyAlgorithm.Click += new System.EventHandler(this.tsmApplyAlgorithm_Click);
+            // 
+            // tsAbout
+            // 
+            this.tsAbout.Name = "tsAbout";
+            this.tsAbout.Size = new System.Drawing.Size(52, 20);
+            this.tsAbout.Text = "About";
+            this.tsAbout.Click += new System.EventHandler(this.tsAbout_Click);
             // 
             // tableLayoutPanel1
             // 
@@ -373,20 +380,10 @@
             this.panelCompression.AutoSize = true;
             this.panelCompression.Controls.Add(this.cmbCompression);
             this.panelCompression.Controls.Add(this.label6);
-            this.panelCompression.Enabled = false;
             this.panelCompression.Location = new System.Drawing.Point(291, 3);
             this.panelCompression.Name = "panelCompression";
             this.panelCompression.Size = new System.Drawing.Size(147, 28);
             this.panelCompression.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 7);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(70, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Compression:";
             // 
             // cmbCompression
             // 
@@ -396,6 +393,15 @@
             this.cmbCompression.Name = "cmbCompression";
             this.cmbCompression.Size = new System.Drawing.Size(72, 21);
             this.cmbCompression.TabIndex = 2;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 7);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(70, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Compression:";
             // 
             // panelColorDepth
             // 
@@ -438,13 +444,6 @@
             this.label7.Size = new System.Drawing.Size(64, 13);
             this.label7.TabIndex = 0;
             this.label7.Text = "Color depth:";
-            // 
-            // tsAbout
-            // 
-            this.tsAbout.Name = "tsAbout";
-            this.tsAbout.Size = new System.Drawing.Size(52, 20);
-            this.tsAbout.Text = "About";
-            this.tsAbout.Click += new System.EventHandler(this.tsAbout_Click);
             // 
             // MainForm
             // 

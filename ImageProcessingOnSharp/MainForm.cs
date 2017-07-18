@@ -24,6 +24,7 @@ namespace ImageProcessingOnSharp
             cmbAlgorithm.Items.Clear();
             cmbAlgorithm.Items.Add(JPEG.GetInstance());
             cmbAlgorithm.Items.Add(PNG.GetInstance());
+            cmbAlgorithm.Items.Add(TIFF.GetInstance());
             cmbAlgorithm.SelectedIndex = 0;
 
             cmbCompression.Items.Clear();
@@ -68,7 +69,7 @@ namespace ImageProcessingOnSharp
             }
 
             saveFileDialog.DefaultExt = _resultExtension;
-            saveFileDialog.Filter = String.Format("Изображение|*.{0}", _resultExtension);
+            saveFileDialog.Filter = String.Format("Image|*.{0}", _resultExtension);
             saveFileDialog.FileName = String.Format("{0}.{1}", openFileDialog.FileName, _resultExtension);
             DialogResult choice = saveFileDialog.ShowDialog();
             if (choice == DialogResult.OK)
@@ -102,8 +103,14 @@ namespace ImageProcessingOnSharp
             }
             else if (algorithm.ToString().Equals("PNG"))
             {
-                long qualityLevel = (long)nudQualityLevel.Value;
-                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>());
+                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { });
+                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
+                rtbStatistic.Text = this.MakeReport(compressedImage, "");
+            }
+            else if (algorithm.ToString().Equals("TIFF"))
+            {
+                long compression = cmbCompression.SelectedIndex + 2;
+                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression });
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
                 rtbStatistic.Text = this.MakeReport(compressedImage, "");
             }
@@ -133,10 +140,17 @@ namespace ImageProcessingOnSharp
             if (option.Equals("JPEG"))
             {
                 panelQuality.Visible = true;
+                panelCompression.Visible = false;
             }
             else if (option.Equals("PNG"))
             {
                 panelQuality.Visible = false;
+                panelCompression.Visible = false;
+            }
+            else if (option.Equals("TIFF"))
+            {
+                panelQuality.Visible = false;
+                panelCompression.Visible = true;
             }
         }
 
