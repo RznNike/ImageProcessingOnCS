@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ImageProcessingOnSharp
 {
@@ -27,21 +24,9 @@ namespace ImageProcessingOnSharp
 
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
-            //long qualityLevel = (long)parArguments[0];
-            EncoderParameters parameters = new EncoderParameters();
-            parameters.Param[0] = new EncoderParameter(Encoder.Quality, 100);
-            ImageCodecInfo[ ] codecInfos = ImageCodecInfo.GetImageEncoders();
-            ImageCodecInfo pngInfo = null;
-            foreach (ImageCodecInfo info in codecInfos)
-            {
-                if (info.FormatDescription.Equals("PNG"))
-                {
-                    pngInfo = info;
-                }
-            }
             Stream result = new MemoryStream();
             Bitmap tempImage = new Bitmap(parOriginalImage);
-            tempImage.Save(result, pngInfo, parameters);
+            tempImage.Save(result, ImageFormat.Png);
             return result;
         }
 
