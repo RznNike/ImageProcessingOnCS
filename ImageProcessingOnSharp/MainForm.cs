@@ -25,6 +25,7 @@ namespace ImageProcessingOnSharp
             cmbAlgorithm.Items.Add(JPEG.GetInstance());
             cmbAlgorithm.Items.Add(PNG.GetInstance());
             cmbAlgorithm.Items.Add(TIFF.GetInstance());
+            cmbAlgorithm.Items.Add(GZIP.GetInstance());
             cmbAlgorithm.SelectedIndex = 0;
 
             cmbCompression.Items.Clear();
@@ -34,6 +35,12 @@ namespace ImageProcessingOnSharp
             cmbCompression.Items.Add("RLE");
             cmbCompression.Items.Add("None");
             cmbCompression.SelectedIndex = 0;
+
+            cmbCompressionLevel.Items.Clear();
+            cmbCompressionLevel.Items.Add("Optimal");
+            cmbCompressionLevel.Items.Add("Fast");
+            cmbCompressionLevel.Items.Add("None");
+            cmbCompressionLevel.SelectedIndex = 0;
 
             cmbColorDepth.Items.Clear();
             cmbColorDepth.Items.Add(1L);
@@ -124,6 +131,13 @@ namespace ImageProcessingOnSharp
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
                 rtbStatistic.Text = this.MakeReport(compressedImage, "");
             }
+            else if (algorithm.ToString().Equals("GZIP"))
+            {
+                int compressionLevel = (int)cmbCompressionLevel.SelectedIndex;
+                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
+                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
+                rtbStatistic.Text = this.MakeReport(compressedImage, "");
+            }
             pboxResult.Image = new Bitmap(_resultImage);
             _resultExtension = algorithm.GetFileExtension();
         }
@@ -152,18 +166,28 @@ namespace ImageProcessingOnSharp
                 panelQuality.Visible = true;
                 panelCompression.Visible = false;
                 panelColorDepth.Visible = false;
+                panelCompressionLevel.Visible = false;
             }
             else if (option.Equals("PNG"))
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;
                 panelColorDepth.Visible = false;
+                panelCompressionLevel.Visible = false;
             }
             else if (option.Equals("TIFF"))
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = true;
                 panelColorDepth.Visible = true;
+                panelCompressionLevel.Visible = false;
+            }
+            else if (option.Equals("GZIP"))
+            {
+                panelQuality.Visible = false;
+                panelCompression.Visible = false;
+                panelColorDepth.Visible = false;
+                panelCompressionLevel.Visible = true;
             }
         }
 

@@ -55,10 +55,13 @@
             this.panelCompression = new System.Windows.Forms.Panel();
             this.cmbCompression = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.panelCompressionLevel = new System.Windows.Forms.Panel();
+            this.cmbCompressionLevel = new System.Windows.Forms.ComboBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.panelColorDepth = new System.Windows.Forms.Panel();
+            this.cmbColorDepth = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.cmbColorDepth = new System.Windows.Forms.ComboBox();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -70,6 +73,7 @@
             this.panelQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).BeginInit();
             this.panelCompression.SuspendLayout();
+            this.panelCompressionLevel.SuspendLayout();
             this.panelColorDepth.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -170,10 +174,10 @@
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 76.19048F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 23.80952F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 95F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(689, 512);
             this.tableLayoutPanel1.TabIndex = 14;
             // 
@@ -182,9 +186,9 @@
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox1, 5);
             this.groupBox1.Controls.Add(this.rtbStatistic);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 434);
+            this.groupBox1.Location = new System.Drawing.Point(3, 420);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(683, 75);
+            this.groupBox1.Size = new System.Drawing.Size(683, 89);
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistic:";
@@ -196,7 +200,7 @@
             this.rtbStatistic.Name = "rtbStatistic";
             this.rtbStatistic.ReadOnly = true;
             this.rtbStatistic.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.rtbStatistic.Size = new System.Drawing.Size(677, 56);
+            this.rtbStatistic.Size = new System.Drawing.Size(677, 70);
             this.rtbStatistic.TabIndex = 1;
             this.rtbStatistic.Text = "";
             // 
@@ -207,7 +211,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(317, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 298);
+            this.label1.Size = new System.Drawing.Size(54, 282);
             this.label1.TabIndex = 15;
             this.label1.Text = "→";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -219,7 +223,7 @@
             this.pboxOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pboxOriginal.Location = new System.Drawing.Point(3, 3);
             this.pboxOriginal.Name = "pboxOriginal";
-            this.pboxOriginal.Size = new System.Drawing.Size(308, 292);
+            this.pboxOriginal.Size = new System.Drawing.Size(308, 276);
             this.pboxOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pboxOriginal.TabIndex = 16;
             this.pboxOriginal.TabStop = false;
@@ -231,7 +235,7 @@
             this.pboxResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pboxResult.Location = new System.Drawing.Point(377, 3);
             this.pboxResult.Name = "pboxResult";
-            this.pboxResult.Size = new System.Drawing.Size(309, 292);
+            this.pboxResult.Size = new System.Drawing.Size(309, 276);
             this.pboxResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pboxResult.TabIndex = 17;
             this.pboxResult.TabStop = false;
@@ -241,7 +245,7 @@
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(3, 298);
+            this.label2.Location = new System.Drawing.Point(3, 282);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 40);
             this.label2.TabIndex = 18;
@@ -252,7 +256,7 @@
             // 
             this.btnLoad.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnLoad.Location = new System.Drawing.Point(95, 301);
+            this.btnLoad.Location = new System.Drawing.Point(95, 285);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(216, 34);
             this.btnLoad.TabIndex = 19;
@@ -265,7 +269,7 @@
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(377, 298);
+            this.label3.Location = new System.Drawing.Point(377, 282);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(86, 40);
             this.label3.TabIndex = 20;
@@ -276,7 +280,7 @@
             // 
             this.btnApplyAlgorithm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnApplyAlgorithm.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnApplyAlgorithm.Location = new System.Drawing.Point(469, 301);
+            this.btnApplyAlgorithm.Location = new System.Drawing.Point(469, 285);
             this.btnApplyAlgorithm.Name = "btnApplyAlgorithm";
             this.btnApplyAlgorithm.Size = new System.Drawing.Size(217, 34);
             this.btnApplyAlgorithm.TabIndex = 21;
@@ -290,9 +294,9 @@
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox2, 5);
             this.groupBox2.Controls.Add(this.flowLayoutPanel1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 341);
+            this.groupBox2.Location = new System.Drawing.Point(3, 325);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(683, 87);
+            this.groupBox2.Size = new System.Drawing.Size(683, 89);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings:";
@@ -302,11 +306,12 @@
             this.flowLayoutPanel1.Controls.Add(this.panelAlgorithm);
             this.flowLayoutPanel1.Controls.Add(this.panelQuality);
             this.flowLayoutPanel1.Controls.Add(this.panelCompression);
+            this.flowLayoutPanel1.Controls.Add(this.panelCompressionLevel);
             this.flowLayoutPanel1.Controls.Add(this.panelColorDepth);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(677, 68);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(677, 70);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // panelAlgorithm
@@ -402,24 +407,43 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Compression:";
             // 
+            // panelCompressionLevel
+            // 
+            this.panelCompressionLevel.AutoSize = true;
+            this.panelCompressionLevel.Controls.Add(this.cmbCompressionLevel);
+            this.panelCompressionLevel.Controls.Add(this.label8);
+            this.panelCompressionLevel.Location = new System.Drawing.Point(444, 3);
+            this.panelCompressionLevel.Name = "panelCompressionLevel";
+            this.panelCompressionLevel.Size = new System.Drawing.Size(176, 28);
+            this.panelCompressionLevel.TabIndex = 4;
+            // 
+            // cmbCompressionLevel
+            // 
+            this.cmbCompressionLevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCompressionLevel.FormattingEnabled = true;
+            this.cmbCompressionLevel.Location = new System.Drawing.Point(101, 4);
+            this.cmbCompressionLevel.Name = "cmbCompressionLevel";
+            this.cmbCompressionLevel.Size = new System.Drawing.Size(72, 21);
+            this.cmbCompressionLevel.TabIndex = 3;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 7);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(95, 13);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Compression level:";
+            // 
             // panelColorDepth
             // 
             this.panelColorDepth.AutoSize = true;
             this.panelColorDepth.Controls.Add(this.cmbColorDepth);
             this.panelColorDepth.Controls.Add(this.label7);
-            this.panelColorDepth.Location = new System.Drawing.Point(444, 3);
+            this.panelColorDepth.Location = new System.Drawing.Point(3, 37);
             this.panelColorDepth.Name = "panelColorDepth";
             this.panelColorDepth.Size = new System.Drawing.Size(117, 28);
             this.panelColorDepth.TabIndex = 3;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 7);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Color depth:";
             // 
             // cmbColorDepth
             // 
@@ -429,6 +453,15 @@
             this.cmbColorDepth.Name = "cmbColorDepth";
             this.cmbColorDepth.Size = new System.Drawing.Size(46, 21);
             this.cmbColorDepth.TabIndex = 3;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 7);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Color depth:";
             // 
             // MainForm
             // 
@@ -459,6 +492,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).EndInit();
             this.panelCompression.ResumeLayout(false);
             this.panelCompression.PerformLayout();
+            this.panelCompressionLevel.ResumeLayout(false);
+            this.panelCompressionLevel.PerformLayout();
             this.panelColorDepth.ResumeLayout(false);
             this.panelColorDepth.PerformLayout();
             this.ResumeLayout(false);
@@ -484,7 +519,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnApplyAlgorithm;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ToolStripMenuItem tsActions;
         private System.Windows.Forms.ToolStripMenuItem tsmApplyAlgorithm;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
@@ -495,7 +529,6 @@
         private System.Windows.Forms.Panel panelQuality;
         private System.Windows.Forms.NumericUpDown nudQualityLevel;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.RichTextBox rtbStatistic;
         private System.Windows.Forms.Panel panelCompression;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbCompression;
@@ -503,6 +536,11 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ToolStripMenuItem tsAbout;
         private System.Windows.Forms.ComboBox cmbColorDepth;
+        private System.Windows.Forms.Panel panelCompressionLevel;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RichTextBox rtbStatistic;
+        private System.Windows.Forms.ComboBox cmbCompressionLevel;
     }
 }
 
