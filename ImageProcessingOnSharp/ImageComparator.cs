@@ -41,8 +41,8 @@ namespace ImageProcessingOnSharp
             }
             result = (pixNumber - result) / pixNumber;
 
-            original.UnlockBits(bdModded);
-            modded.UnlockBits(bdOriginal);
+            original.UnlockBits(bdOriginal);
+            modded.UnlockBits(bdModded);
 
             return result;
         }
