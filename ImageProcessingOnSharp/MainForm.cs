@@ -16,6 +16,7 @@ namespace ImageProcessingOnSharp
     {
         Stream _originalImage;
         Stream _resultImage;
+        String _originalExtension;
         String _resultExtension;
 
         public MainForm()
@@ -66,8 +67,8 @@ namespace ImageProcessingOnSharp
                 try
                 {
                     _originalImage = new MemoryStream(File.ReadAllBytes(openFileDialog.FileName));
-
                     pboxOriginal.Image = new Bitmap(_originalImage);
+                    _originalExtension = Path.GetExtension(openFileDialog.FileName).TrimStart('.');
                 }
                 catch
                 {
@@ -109,37 +110,39 @@ namespace ImageProcessingOnSharp
             }
 
             Algorithm algorithm = (Algorithm)cmbAlgorithm.SelectedItem;
+            string parameters = "";
+            Stream compressedImage = null;
             if (algorithm.ToString().Equals("JPEG"))
             {
                 long qualityLevel = (long)nudQualityLevel.Value;
-                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
-                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
-                rtbStatistic.Text = this.MakeReport(compressedImage, "");
+                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
+                parameters = string.Format("quality = {0}%.", qualityLevel);
+                _resultExtension = algorithm.GetFileExtension();
             }
             else if (algorithm.ToString().Equals("PNG"))
             {
-                long colorDepth = (long)cmbColorDepth.SelectedItem;
-                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { colorDepth });
-                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
-                rtbStatistic.Text = this.MakeReport(compressedImage, "");
+                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { });
+                parameters = "-";
+                _resultExtension = algorithm.GetFileExtension();
             }
             else if (algorithm.ToString().Equals("TIFF"))
             {
                 long compression = cmbCompression.SelectedIndex + 2;
                 long colorDepth = (long)cmbColorDepth.SelectedItem;
-                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression, colorDepth });
-                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
-                rtbStatistic.Text = this.MakeReport(compressedImage, "");
+                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression, colorDepth });
+                parameters = string.Format("compression = {0}; color depth = {1} bit.", cmbCompression.Items[(int)compression - 2].ToString(), colorDepth);
+                _resultExtension = algorithm.GetFileExtension();
             }
             else if (algorithm.ToString().Equals("GZIP"))
             {
-                int compressionLevel = (int)cmbCompressionLevel.SelectedIndex;
-                Stream compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
-                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
-                rtbStatistic.Text = this.MakeReport(compressedImage, "");
+                int compressionLevel = cmbCompressionLevel.SelectedIndex;
+                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
+                parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString());
+                _resultExtension = _originalExtension;
             }
+            _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
+            rtbStatistic.Text = this.MakeReport(compressedImage, parameters);
             pboxResult.Image = new Bitmap(_resultImage);
-            _resultExtension = algorithm.GetFileExtension();
         }
 
         private string MakeReport(Stream parCompressedImage, string parAlgorithmParameters)
