@@ -53,7 +53,8 @@ namespace ImageProcessingOnSharp
             modded.UnlockBits(bdModded);
 
             Stream interlacedImage = new MemoryStream();
-            modded.Save(interlacedImage, ImageFormat.Bmp);
+            ImageFormat format = (ImageFormat)parArguments[1];
+            modded.Save(interlacedImage, format);
             interlacedImage.WriteByte(lastRowIsOdd);
 
             GZIP gzip = GZIP.GetInstance();
@@ -116,7 +117,8 @@ namespace ImageProcessingOnSharp
             reconstructed.UnlockBits(bdReconstructed);
 
             Stream reconstructedImage = new MemoryStream();
-            reconstructed.Save(reconstructedImage, ImageFormat.Bmp);
+            ImageFormat format = (ImageFormat)parArguments[0];
+            reconstructed.Save(reconstructedImage, format);
             return reconstructedImage;
         }
 

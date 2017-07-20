@@ -62,6 +62,12 @@
             this.cmbColorDepth = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.panelInterimFormat = new System.Windows.Forms.Panel();
+            this.cmbInterimFormat = new System.Windows.Forms.ComboBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.panelFinalFormat = new System.Windows.Forms.Panel();
+            this.cmbFinalFormat = new System.Windows.Forms.ComboBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -75,6 +81,8 @@
             this.panelCompression.SuspendLayout();
             this.panelCompressionLevel.SuspendLayout();
             this.panelColorDepth.SuspendLayout();
+            this.panelInterimFormat.SuspendLayout();
+            this.panelFinalFormat.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -308,6 +316,8 @@
             this.flowLayoutPanel1.Controls.Add(this.panelCompression);
             this.flowLayoutPanel1.Controls.Add(this.panelCompressionLevel);
             this.flowLayoutPanel1.Controls.Add(this.panelColorDepth);
+            this.flowLayoutPanel1.Controls.Add(this.panelInterimFormat);
+            this.flowLayoutPanel1.Controls.Add(this.panelFinalFormat);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -321,14 +331,14 @@
             this.panelAlgorithm.Controls.Add(this.label4);
             this.panelAlgorithm.Location = new System.Drawing.Point(3, 3);
             this.panelAlgorithm.Name = "panelAlgorithm";
-            this.panelAlgorithm.Size = new System.Drawing.Size(186, 28);
+            this.panelAlgorithm.Size = new System.Drawing.Size(183, 28);
             this.panelAlgorithm.TabIndex = 0;
             // 
             // cmbAlgorithm
             // 
             this.cmbAlgorithm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAlgorithm.FormattingEnabled = true;
-            this.cmbAlgorithm.Location = new System.Drawing.Point(62, 4);
+            this.cmbAlgorithm.Location = new System.Drawing.Point(59, 4);
             this.cmbAlgorithm.Name = "cmbAlgorithm";
             this.cmbAlgorithm.Size = new System.Drawing.Size(121, 21);
             this.cmbAlgorithm.TabIndex = 1;
@@ -348,14 +358,14 @@
             this.panelQuality.AutoSize = true;
             this.panelQuality.Controls.Add(this.nudQualityLevel);
             this.panelQuality.Controls.Add(this.label5);
-            this.panelQuality.Location = new System.Drawing.Point(195, 3);
+            this.panelQuality.Location = new System.Drawing.Point(192, 3);
             this.panelQuality.Name = "panelQuality";
-            this.panelQuality.Size = new System.Drawing.Size(90, 28);
+            this.panelQuality.Size = new System.Drawing.Size(91, 28);
             this.panelQuality.TabIndex = 1;
             // 
             // nudQualityLevel
             // 
-            this.nudQualityLevel.Location = new System.Drawing.Point(46, 5);
+            this.nudQualityLevel.Location = new System.Drawing.Point(47, 5);
             this.nudQualityLevel.Minimum = new decimal(new int[] {
             1,
             0,
@@ -384,16 +394,16 @@
             this.panelCompression.AutoSize = true;
             this.panelCompression.Controls.Add(this.cmbCompression);
             this.panelCompression.Controls.Add(this.label6);
-            this.panelCompression.Location = new System.Drawing.Point(291, 3);
+            this.panelCompression.Location = new System.Drawing.Point(289, 3);
             this.panelCompression.Name = "panelCompression";
-            this.panelCompression.Size = new System.Drawing.Size(147, 28);
+            this.panelCompression.Size = new System.Drawing.Size(150, 28);
             this.panelCompression.TabIndex = 2;
             // 
             // cmbCompression
             // 
             this.cmbCompression.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbCompression.FormattingEnabled = true;
-            this.cmbCompression.Location = new System.Drawing.Point(72, 4);
+            this.cmbCompression.Location = new System.Drawing.Point(75, 4);
             this.cmbCompression.Name = "cmbCompression";
             this.cmbCompression.Size = new System.Drawing.Size(72, 21);
             this.cmbCompression.TabIndex = 2;
@@ -412,7 +422,7 @@
             this.panelCompressionLevel.AutoSize = true;
             this.panelCompressionLevel.Controls.Add(this.cmbCompressionLevel);
             this.panelCompressionLevel.Controls.Add(this.label8);
-            this.panelCompressionLevel.Location = new System.Drawing.Point(444, 3);
+            this.panelCompressionLevel.Location = new System.Drawing.Point(445, 3);
             this.panelCompressionLevel.Name = "panelCompressionLevel";
             this.panelCompressionLevel.Size = new System.Drawing.Size(176, 28);
             this.panelCompressionLevel.TabIndex = 4;
@@ -442,14 +452,14 @@
             this.panelColorDepth.Controls.Add(this.label7);
             this.panelColorDepth.Location = new System.Drawing.Point(3, 37);
             this.panelColorDepth.Name = "panelColorDepth";
-            this.panelColorDepth.Size = new System.Drawing.Size(117, 28);
+            this.panelColorDepth.Size = new System.Drawing.Size(118, 28);
             this.panelColorDepth.TabIndex = 3;
             // 
             // cmbColorDepth
             // 
             this.cmbColorDepth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbColorDepth.FormattingEnabled = true;
-            this.cmbColorDepth.Location = new System.Drawing.Point(68, 4);
+            this.cmbColorDepth.Location = new System.Drawing.Point(69, 4);
             this.cmbColorDepth.Name = "cmbColorDepth";
             this.cmbColorDepth.Size = new System.Drawing.Size(46, 21);
             this.cmbColorDepth.TabIndex = 3;
@@ -462,6 +472,62 @@
             this.label7.Size = new System.Drawing.Size(64, 13);
             this.label7.TabIndex = 0;
             this.label7.Text = "Color depth:";
+            // 
+            // panelInterimFormat
+            // 
+            this.panelInterimFormat.AutoSize = true;
+            this.panelInterimFormat.Controls.Add(this.cmbInterimFormat);
+            this.panelInterimFormat.Controls.Add(this.label9);
+            this.panelInterimFormat.Location = new System.Drawing.Point(127, 37);
+            this.panelInterimFormat.Name = "panelInterimFormat";
+            this.panelInterimFormat.Size = new System.Drawing.Size(127, 28);
+            this.panelInterimFormat.TabIndex = 5;
+            // 
+            // cmbInterimFormat
+            // 
+            this.cmbInterimFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbInterimFormat.FormattingEnabled = true;
+            this.cmbInterimFormat.Location = new System.Drawing.Point(78, 4);
+            this.cmbInterimFormat.Name = "cmbInterimFormat";
+            this.cmbInterimFormat.Size = new System.Drawing.Size(46, 21);
+            this.cmbInterimFormat.TabIndex = 3;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 7);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(73, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Interim format:";
+            // 
+            // panelFinalFormat
+            // 
+            this.panelFinalFormat.AutoSize = true;
+            this.panelFinalFormat.Controls.Add(this.cmbFinalFormat);
+            this.panelFinalFormat.Controls.Add(this.label10);
+            this.panelFinalFormat.Location = new System.Drawing.Point(260, 37);
+            this.panelFinalFormat.Name = "panelFinalFormat";
+            this.panelFinalFormat.Size = new System.Drawing.Size(119, 28);
+            this.panelFinalFormat.TabIndex = 6;
+            // 
+            // cmbFinalFormat
+            // 
+            this.cmbFinalFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFinalFormat.FormattingEnabled = true;
+            this.cmbFinalFormat.Location = new System.Drawing.Point(70, 4);
+            this.cmbFinalFormat.Name = "cmbFinalFormat";
+            this.cmbFinalFormat.Size = new System.Drawing.Size(46, 21);
+            this.cmbFinalFormat.TabIndex = 3;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(3, 7);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(64, 13);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Final format:";
             // 
             // MainForm
             // 
@@ -496,6 +562,10 @@
             this.panelCompressionLevel.PerformLayout();
             this.panelColorDepth.ResumeLayout(false);
             this.panelColorDepth.PerformLayout();
+            this.panelInterimFormat.ResumeLayout(false);
+            this.panelInterimFormat.PerformLayout();
+            this.panelFinalFormat.ResumeLayout(false);
+            this.panelFinalFormat.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -541,6 +611,12 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.RichTextBox rtbStatistic;
         private System.Windows.Forms.ComboBox cmbCompressionLevel;
+        private System.Windows.Forms.Panel panelInterimFormat;
+        private System.Windows.Forms.ComboBox cmbInterimFormat;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panelFinalFormat;
+        private System.Windows.Forms.ComboBox cmbFinalFormat;
+        private System.Windows.Forms.Label label10;
     }
 }
 

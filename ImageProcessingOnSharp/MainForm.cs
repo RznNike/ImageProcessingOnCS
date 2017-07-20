@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -46,6 +47,18 @@ namespace ImageProcessingOnSharp
             cmbColorDepth.Items.Add(24L);
             cmbColorDepth.Items.Add(32L);
             cmbColorDepth.SelectedIndex = 3;
+            
+            cmbInterimFormat.Items.Clear();
+            cmbInterimFormat.Items.Add(ImageFormat.Png);
+            cmbInterimFormat.Items.Add(ImageFormat.Bmp);
+            cmbInterimFormat.Items.Add(ImageFormat.Tiff);
+            cmbInterimFormat.SelectedIndex = 0;
+
+            cmbFinalFormat.Items.Clear();
+            cmbFinalFormat.Items.Add(ImageFormat.Png);
+            cmbFinalFormat.Items.Add(ImageFormat.Bmp);
+            cmbFinalFormat.Items.Add(ImageFormat.Tiff);
+            cmbFinalFormat.SelectedIndex = 0;
 
             _resultExtension = null;
         }
@@ -137,10 +150,12 @@ namespace ImageProcessingOnSharp
             else if (algorithm.ToString().Equals("HInterlacing+GZIP"))
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
-                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
+                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel, cmbInterimFormat.SelectedItem });
                 parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString());
+                _resultExtension = cmbFinalFormat.SelectedItem.ToString().ToLower();
             }
-            _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
+            // Final format parameter is not actual for JPEG, PNG, TIFF and GZIP
+            _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { cmbFinalFormat.SelectedItem });
             rtbStatistic.Text = this.MakeReport(compressedImage, parameters);
             pboxResult.Image = new Bitmap(_resultImage);
         }
@@ -170,6 +185,8 @@ namespace ImageProcessingOnSharp
                 panelCompression.Visible = false;
                 panelColorDepth.Visible = false;
                 panelCompressionLevel.Visible = false;
+                panelInterimFormat.Visible = false;
+                panelFinalFormat.Visible = false;
             }
             else if (option.Equals("PNG"))
             {
@@ -177,6 +194,8 @@ namespace ImageProcessingOnSharp
                 panelCompression.Visible = false;
                 panelColorDepth.Visible = false;
                 panelCompressionLevel.Visible = false;
+                panelInterimFormat.Visible = false;
+                panelFinalFormat.Visible = false;
             }
             else if (option.Equals("TIFF"))
             {
@@ -184,14 +203,26 @@ namespace ImageProcessingOnSharp
                 panelCompression.Visible = true;
                 panelColorDepth.Visible = true;
                 panelCompressionLevel.Visible = false;
+                panelInterimFormat.Visible = false;
+                panelFinalFormat.Visible = false;
             }
-            else if (option.Equals("GZIP")
-                     || option.Equals("HInterlacing+GZIP"))
+            else if (option.Equals("GZIP"))
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;
                 panelColorDepth.Visible = false;
                 panelCompressionLevel.Visible = true;
+                panelInterimFormat.Visible = false;
+                panelFinalFormat.Visible = false;
+            }
+            else if (option.Equals("HInterlacing+GZIP"))
+            {
+                panelQuality.Visible = false;
+                panelCompression.Visible = false;
+                panelColorDepth.Visible = false;
+                panelCompressionLevel.Visible = true;
+                panelInterimFormat.Visible = true;
+                panelFinalFormat.Visible = true;
             }
         }
 
