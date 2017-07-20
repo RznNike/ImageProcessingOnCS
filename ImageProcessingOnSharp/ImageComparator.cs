@@ -32,12 +32,11 @@ namespace ImageProcessingOnSharp
             int pixNumber = bitsOriginal.Length;
             double result = 0;
             for (int i = 0; i < pixNumber; i++)
-            {/*
+            {
                 Color color1 = Color.FromArgb(bitsOriginal[i]);
                 Color color2 = Color.FromArgb(bitsModded[i]);
                 double delta = (Math.Abs(color1.R - color2.R) + Math.Abs(color1.G - color2.G) + Math.Abs(color1.B - color2.B)) / (255 * 3.0);
-                result += delta;*/
-                result += Math.Abs(bitsOriginal[i] - bitsModded[i]) / (int.MaxValue / 255.0);
+                result += delta;
             }
             result = (pixNumber - result) / pixNumber;
 
