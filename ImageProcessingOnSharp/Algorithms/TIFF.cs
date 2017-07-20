@@ -24,7 +24,7 @@ namespace ImageProcessingOnSharp
 
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
-            long compression = (long)parArguments[0];
+            /*long compression = (long)parArguments[0];
             long colorDepth = (long)parArguments[1];
             EncoderParameters parameters = new EncoderParameters(2);
             parameters.Param[0] = new EncoderParameter(Encoder.Compression, compression);
@@ -37,10 +37,11 @@ namespace ImageProcessingOnSharp
                 {
                     tiffInfo = info;
                 }
-            }
+            }*/
             Stream result = new MemoryStream();
             Bitmap tempImage = new Bitmap(parOriginalImage);
-            tempImage.Save(result, tiffInfo, parameters);
+            //tempImage.Save(result, tiffInfo, parameters);
+            tempImage.Save(result, ImageFormat.Tiff);
             return result;
         }
 

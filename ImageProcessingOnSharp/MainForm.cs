@@ -135,10 +135,11 @@ namespace ImageProcessingOnSharp
             }
             else if (algorithm.ToString().Equals("TIFF"))
             {
-                long compression = cmbCompression.SelectedIndex + 2;
-                long colorDepth = (long)cmbColorDepth.SelectedItem;
-                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression, colorDepth });
-                parameters = string.Format("compression = {0}; color depth = {1} bit.", cmbCompression.Items[(int)compression - 2].ToString(), colorDepth);
+                /*long compression = cmbCompression.SelectedIndex + 2;
+                long colorDepth = (long)cmbColorDepth.SelectedItem;*/
+                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { /*compression, colorDepth*/ });
+                //parameters = string.Format("compression = {0}; color depth = {1} bit.", cmbCompression.Items[(int)compression - 2].ToString(), colorDepth);
+                parameters = "-";
             }
             else if (algorithm.ToString().Equals("GZIP"))
             {
@@ -200,8 +201,10 @@ namespace ImageProcessingOnSharp
             else if (option.Equals("TIFF"))
             {
                 panelQuality.Visible = false;
-                panelCompression.Visible = true;
-                panelColorDepth.Visible = true;
+                /*panelCompression.Visible = true;
+                panelColorDepth.Visible = true;*/
+                panelCompression.Visible = false;
+                panelColorDepth.Visible = false;
                 panelCompressionLevel.Visible = false;
                 panelInterimFormat.Visible = false;
                 panelFinalFormat.Visible = false;
