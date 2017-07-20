@@ -24,11 +24,6 @@ namespace ImageProcessingOnSharp
 
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
-            // Перевернуть изображение на 90 градусов по часовой
-            // Передать его в HInterlacing
-            // ---
-            // Передать изображение в HInterlacing
-            // Перевернуть изображение на 90 градусов ПРОТИВ часовой
             Bitmap original = new Bitmap(parOriginalImage);
             original.RotateFlip(RotateFlipType.Rotate90FlipNone);
             Stream rotatedImage = new MemoryStream();
