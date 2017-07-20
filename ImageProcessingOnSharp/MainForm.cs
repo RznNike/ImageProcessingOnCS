@@ -12,8 +12,8 @@ namespace ImageProcessingOnSharp
     {
         Stream _originalImage;
         Stream _resultImage;
-        String _originalExtension;
-        String _resultExtension;
+        string _originalExtension;
+        string _resultExtension;
 
         public MainForm()
         {
@@ -24,6 +24,7 @@ namespace ImageProcessingOnSharp
             cmbAlgorithm.Items.Add(TIFF.GetInstance());
             cmbAlgorithm.Items.Add(GZIP.GetInstance());
             cmbAlgorithm.Items.Add(HInterlacingWithGZIP.GetInstance());
+            cmbAlgorithm.Items.Add(VInterlacingWithGZIP.GetInstance());
             cmbAlgorithm.SelectedIndex = 0;
 
             cmbCompression.Items.Clear();
@@ -94,8 +95,8 @@ namespace ImageProcessingOnSharp
             }
 
             saveFileDialog.DefaultExt = _resultExtension;
-            saveFileDialog.Filter = String.Format("Image|*.{0}", _resultExtension);
-            saveFileDialog.FileName = String.Format("{0}.{1}", openFileDialog.FileName, _resultExtension);
+            saveFileDialog.Filter = string.Format("Image|*.{0}", _resultExtension);
+            saveFileDialog.FileName = string.Format("{0}.{1}", openFileDialog.FileName, _resultExtension);
             DialogResult choice = saveFileDialog.ShowDialog();
             if (choice == DialogResult.OK)
             {
@@ -119,21 +120,22 @@ namespace ImageProcessingOnSharp
             }
 
             Algorithm algorithm = (Algorithm)cmbAlgorithm.SelectedItem;
+            string option = algorithm.ToString();
             string parameters = "";
             Stream compressedImage = null;
             _resultExtension = algorithm.GetFileExtension();
-            if (algorithm.ToString().Equals("JPEG"))
+            if (option.Equals("JPEG"))
             {
                 long qualityLevel = (long)nudQualityLevel.Value;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
                 parameters = string.Format("quality = {0}%.", qualityLevel);
             }
-            else if (algorithm.ToString().Equals("PNG"))
+            else if (option.Equals("PNG"))
             {
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { });
                 parameters = "-";
             }
-            else if (algorithm.ToString().Equals("TIFF"))
+            else if (option.Equals("TIFF"))
             {
                 /*long compression = cmbCompression.SelectedIndex + 2;
                 long colorDepth = (long)cmbColorDepth.SelectedItem;*/
@@ -141,14 +143,15 @@ namespace ImageProcessingOnSharp
                 //parameters = string.Format("compression = {0}; color depth = {1} bit.", cmbCompression.Items[(int)compression - 2].ToString(), colorDepth);
                 parameters = "-";
             }
-            else if (algorithm.ToString().Equals("GZIP"))
+            else if (option.Equals("GZIP"))
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
                 parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString());
                 _resultExtension = _originalExtension;
             }
-            else if (algorithm.ToString().Equals("HInterlacing+GZIP"))
+            else if (option.Equals("HInterlacing+GZIP")
+                     || option.Equals("VInterlacing+GZIP"))
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel, cmbInterimFormat.SelectedItem });
@@ -218,7 +221,8 @@ namespace ImageProcessingOnSharp
                 panelInterimFormat.Visible = false;
                 panelFinalFormat.Visible = false;
             }
-            else if (option.Equals("HInterlacing+GZIP"))
+            else if (option.Equals("HInterlacing+GZIP")
+                     || option.Equals("VInterlacing+GZIP"))
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;
