@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ImageProcessingOnSharp
@@ -27,6 +22,7 @@ namespace ImageProcessingOnSharp
             cmbAlgorithm.Items.Add(PNG.GetInstance());
             cmbAlgorithm.Items.Add(TIFF.GetInstance());
             cmbAlgorithm.Items.Add(GZIP.GetInstance());
+            cmbAlgorithm.Items.Add(HInterlacingWithGZIP.GetInstance());
             cmbAlgorithm.SelectedIndex = 0;
 
             cmbCompression.Items.Clear();
@@ -112,18 +108,17 @@ namespace ImageProcessingOnSharp
             Algorithm algorithm = (Algorithm)cmbAlgorithm.SelectedItem;
             string parameters = "";
             Stream compressedImage = null;
+            _resultExtension = algorithm.GetFileExtension();
             if (algorithm.ToString().Equals("JPEG"))
             {
                 long qualityLevel = (long)nudQualityLevel.Value;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
                 parameters = string.Format("quality = {0}%.", qualityLevel);
-                _resultExtension = algorithm.GetFileExtension();
             }
             else if (algorithm.ToString().Equals("PNG"))
             {
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { });
                 parameters = "-";
-                _resultExtension = algorithm.GetFileExtension();
             }
             else if (algorithm.ToString().Equals("TIFF"))
             {
@@ -131,7 +126,6 @@ namespace ImageProcessingOnSharp
                 long colorDepth = (long)cmbColorDepth.SelectedItem;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression, colorDepth });
                 parameters = string.Format("compression = {0}; color depth = {1} bit.", cmbCompression.Items[(int)compression - 2].ToString(), colorDepth);
-                _resultExtension = algorithm.GetFileExtension();
             }
             else if (algorithm.ToString().Equals("GZIP"))
             {
@@ -139,6 +133,12 @@ namespace ImageProcessingOnSharp
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
                 parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString());
                 _resultExtension = _originalExtension;
+            }
+            else if (algorithm.ToString().Equals("HInterlacing+GZIP"))
+            {
+                int compressionLevel = cmbCompressionLevel.SelectedIndex;
+                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
+                parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString());
             }
             _resultImage = algorithm.DecompressImage(compressedImage, new List<object>());
             rtbStatistic.Text = this.MakeReport(compressedImage, parameters);
@@ -185,7 +185,8 @@ namespace ImageProcessingOnSharp
                 panelColorDepth.Visible = true;
                 panelCompressionLevel.Visible = false;
             }
-            else if (option.Equals("GZIP"))
+            else if (option.Equals("GZIP")
+                     || option.Equals("HInterlacing+GZIP"))
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;

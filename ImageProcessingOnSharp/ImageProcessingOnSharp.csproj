@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="Algorithms\Algorithm.cs" />
     <Compile Include="Algorithms\GZIP.cs" />
+    <Compile Include="Algorithms\HInterlacingWithGZIP.cs" />
     <Compile Include="Algorithms\TIFF.cs" />
     <Compile Include="Algorithms\JPEG.cs" />
     <Compile Include="ImageComparator.cs" />
