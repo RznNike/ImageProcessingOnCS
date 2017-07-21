@@ -25,6 +25,7 @@ namespace ImageProcessingOnSharp
             cmbAlgorithm.Items.Add(GZIP.GetInstance());
             cmbAlgorithm.Items.Add(HInterlacingWithGZIP.GetInstance());
             cmbAlgorithm.Items.Add(VInterlacingWithGZIP.GetInstance());
+            cmbAlgorithm.Items.Add(XInterlacingWithGZIP.GetInstance());
             cmbAlgorithm.SelectedIndex = 0;
 
             cmbCompression.Items.Clear();
@@ -151,7 +152,8 @@ namespace ImageProcessingOnSharp
                 _resultExtension = _originalExtension;
             }
             else if (option.Equals("HInterlacing+GZIP")
-                     || option.Equals("VInterlacing+GZIP"))
+                     || option.Equals("VInterlacing+GZIP")
+                     || option.Equals("XInterlacing+GZIP"))
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel, cmbInterimFormat.SelectedItem });
@@ -222,7 +224,8 @@ namespace ImageProcessingOnSharp
                 panelFinalFormat.Visible = false;
             }
             else if (option.Equals("HInterlacing+GZIP")
-                     || option.Equals("VInterlacing+GZIP"))
+                     || option.Equals("VInterlacing+GZIP")
+                     || option.Equals("XInterlacing+GZIP"))
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;
