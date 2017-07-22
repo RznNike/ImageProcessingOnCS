@@ -29,11 +29,14 @@ namespace ImageProcessingOnSharp
             cmbAlgorithm.SelectedIndex = 0;
 
             cmbCompression.Items.Clear();
-            cmbCompression.Items.Add("LZW");
+            cmbCompression.Items.Add("Default");
+            cmbCompression.Items.Add("None");
             cmbCompression.Items.Add("CCITT3");
             cmbCompression.Items.Add("CCITT4");
+            cmbCompression.Items.Add("LZW");
             cmbCompression.Items.Add("RLE");
-            cmbCompression.Items.Add("None");
+            cmbCompression.Items.Add("ZIP");
+            cmbCompression.Items.Add(".NET default");
             cmbCompression.SelectedIndex = 0;
 
             cmbCompressionLevel.Items.Clear();
@@ -41,14 +44,6 @@ namespace ImageProcessingOnSharp
             cmbCompressionLevel.Items.Add("Fast");
             cmbCompressionLevel.Items.Add("None");
             cmbCompressionLevel.SelectedIndex = 0;
-
-            cmbColorDepth.Items.Clear();
-            cmbColorDepth.Items.Add(1L);
-            cmbColorDepth.Items.Add(4L);
-            cmbColorDepth.Items.Add(8L);
-            cmbColorDepth.Items.Add(24L);
-            cmbColorDepth.Items.Add(32L);
-            cmbColorDepth.SelectedIndex = 3;
             
             cmbInterimFormat.Items.Clear();
             cmbInterimFormat.Items.Add(ImageFormat.Png);
@@ -138,11 +133,9 @@ namespace ImageProcessingOnSharp
             }
             else if (option.Equals("TIFF"))
             {
-                /*long compression = cmbCompression.SelectedIndex + 2;
-                long colorDepth = (long)cmbColorDepth.SelectedItem;*/
-                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { /*compression, colorDepth*/ });
-                //parameters = string.Format("compression = {0}; color depth = {1} bit.", cmbCompression.Items[(int)compression - 2].ToString(), colorDepth);
-                parameters = "-";
+                int compression = cmbCompression.SelectedIndex;
+                compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression });
+                parameters = string.Format("compression = {0}.", cmbCompression.Items[compression].ToString());
             }
             else if (option.Equals("GZIP"))
             {
@@ -189,7 +182,6 @@ namespace ImageProcessingOnSharp
             {
                 panelQuality.Visible = true;
                 panelCompression.Visible = false;
-                panelColorDepth.Visible = false;
                 panelCompressionLevel.Visible = false;
                 panelInterimFormat.Visible = false;
                 panelFinalFormat.Visible = false;
@@ -198,7 +190,6 @@ namespace ImageProcessingOnSharp
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;
-                panelColorDepth.Visible = false;
                 panelCompressionLevel.Visible = false;
                 panelInterimFormat.Visible = false;
                 panelFinalFormat.Visible = false;
@@ -206,10 +197,7 @@ namespace ImageProcessingOnSharp
             else if (option.Equals("TIFF"))
             {
                 panelQuality.Visible = false;
-                /*panelCompression.Visible = true;
-                panelColorDepth.Visible = true;*/
-                panelCompression.Visible = false;
-                panelColorDepth.Visible = false;
+                panelCompression.Visible = true;
                 panelCompressionLevel.Visible = false;
                 panelInterimFormat.Visible = false;
                 panelFinalFormat.Visible = false;
@@ -218,7 +206,6 @@ namespace ImageProcessingOnSharp
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;
-                panelColorDepth.Visible = false;
                 panelCompressionLevel.Visible = true;
                 panelInterimFormat.Visible = false;
                 panelFinalFormat.Visible = false;
@@ -229,7 +216,6 @@ namespace ImageProcessingOnSharp
             {
                 panelQuality.Visible = false;
                 panelCompression.Visible = false;
-                panelColorDepth.Visible = false;
                 panelCompressionLevel.Visible = true;
                 panelInterimFormat.Visible = true;
                 panelFinalFormat.Visible = true;

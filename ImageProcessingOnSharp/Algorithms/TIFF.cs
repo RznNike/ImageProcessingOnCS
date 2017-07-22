@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Windows;
+using System.Windows.Media.Imaging;
 
 namespace ImageProcessingOnSharp
 {
@@ -24,24 +27,28 @@ namespace ImageProcessingOnSharp
 
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
-            /*long compression = (long)parArguments[0];
-            long colorDepth = (long)parArguments[1];
-            EncoderParameters parameters = new EncoderParameters(2);
-            parameters.Param[0] = new EncoderParameter(Encoder.Compression, compression);
-            parameters.Param[1] = new EncoderParameter(Encoder.ColorDepth, colorDepth);
-            ImageCodecInfo[ ] codecInfos = ImageCodecInfo.GetImageEncoders();
-            ImageCodecInfo tiffInfo = null;
-            foreach (ImageCodecInfo info in codecInfos)
-            {
-                if (info.FormatDescription.Equals("TIFF"))
-                {
-                    tiffInfo = info;
-                }
-            }*/
             Stream result = new MemoryStream();
-            Bitmap tempImage = new Bitmap(parOriginalImage);
-            //tempImage.Save(result, tiffInfo, parameters);
-            tempImage.Save(result, ImageFormat.Tiff);
+            Bitmap original = new Bitmap(parOriginalImage);
+            int compression = (int)parArguments[0];
+            if (compression == 7)
+            {
+                original.Save(result, ImageFormat.Tiff);
+            }
+            else
+            {
+                TiffBitmapEncoder encoder = new TiffBitmapEncoder();
+                encoder.Compression = (TiffCompressOption)compression;
+                BitmapSource originalBMsource =
+                    System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                        original.GetHbitmap(),
+                        IntPtr.Zero,
+                        Int32Rect.Empty,
+                        BitmapSizeOptions.FromEmptyOptions());
+                WriteableBitmap writableBMoriginal = new WriteableBitmap(originalBMsource);
+                encoder.Frames.Add(BitmapFrame.Create(writableBMoriginal));
+                encoder.Save(result);
+            }
+            
             return result;
         }
 

@@ -58,16 +58,13 @@
             this.panelCompressionLevel = new System.Windows.Forms.Panel();
             this.cmbCompressionLevel = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.panelColorDepth = new System.Windows.Forms.Panel();
-            this.cmbColorDepth = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.panelInterimFormat = new System.Windows.Forms.Panel();
             this.cmbInterimFormat = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.panelFinalFormat = new System.Windows.Forms.Panel();
             this.cmbFinalFormat = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -80,7 +77,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).BeginInit();
             this.panelCompression.SuspendLayout();
             this.panelCompressionLevel.SuspendLayout();
-            this.panelColorDepth.SuspendLayout();
             this.panelInterimFormat.SuspendLayout();
             this.panelFinalFormat.SuspendLayout();
             this.SuspendLayout();
@@ -315,7 +311,6 @@
             this.flowLayoutPanel1.Controls.Add(this.panelQuality);
             this.flowLayoutPanel1.Controls.Add(this.panelCompression);
             this.flowLayoutPanel1.Controls.Add(this.panelCompressionLevel);
-            this.flowLayoutPanel1.Controls.Add(this.panelColorDepth);
             this.flowLayoutPanel1.Controls.Add(this.panelInterimFormat);
             this.flowLayoutPanel1.Controls.Add(this.panelFinalFormat);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -396,7 +391,7 @@
             this.panelCompression.Controls.Add(this.label6);
             this.panelCompression.Location = new System.Drawing.Point(289, 3);
             this.panelCompression.Name = "panelCompression";
-            this.panelCompression.Size = new System.Drawing.Size(150, 28);
+            this.panelCompression.Size = new System.Drawing.Size(171, 28);
             this.panelCompression.TabIndex = 2;
             // 
             // cmbCompression
@@ -405,7 +400,7 @@
             this.cmbCompression.FormattingEnabled = true;
             this.cmbCompression.Location = new System.Drawing.Point(75, 4);
             this.cmbCompression.Name = "cmbCompression";
-            this.cmbCompression.Size = new System.Drawing.Size(72, 21);
+            this.cmbCompression.Size = new System.Drawing.Size(93, 21);
             this.cmbCompression.TabIndex = 2;
             // 
             // label6
@@ -422,7 +417,7 @@
             this.panelCompressionLevel.AutoSize = true;
             this.panelCompressionLevel.Controls.Add(this.cmbCompressionLevel);
             this.panelCompressionLevel.Controls.Add(this.label8);
-            this.panelCompressionLevel.Location = new System.Drawing.Point(445, 3);
+            this.panelCompressionLevel.Location = new System.Drawing.Point(466, 3);
             this.panelCompressionLevel.Name = "panelCompressionLevel";
             this.panelCompressionLevel.Size = new System.Drawing.Size(176, 28);
             this.panelCompressionLevel.TabIndex = 4;
@@ -445,40 +440,12 @@
             this.label8.TabIndex = 0;
             this.label8.Text = "Compression level:";
             // 
-            // panelColorDepth
-            // 
-            this.panelColorDepth.AutoSize = true;
-            this.panelColorDepth.Controls.Add(this.cmbColorDepth);
-            this.panelColorDepth.Controls.Add(this.label7);
-            this.panelColorDepth.Location = new System.Drawing.Point(3, 37);
-            this.panelColorDepth.Name = "panelColorDepth";
-            this.panelColorDepth.Size = new System.Drawing.Size(118, 28);
-            this.panelColorDepth.TabIndex = 3;
-            // 
-            // cmbColorDepth
-            // 
-            this.cmbColorDepth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbColorDepth.FormattingEnabled = true;
-            this.cmbColorDepth.Location = new System.Drawing.Point(69, 4);
-            this.cmbColorDepth.Name = "cmbColorDepth";
-            this.cmbColorDepth.Size = new System.Drawing.Size(46, 21);
-            this.cmbColorDepth.TabIndex = 3;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(3, 7);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(64, 13);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Color depth:";
-            // 
             // panelInterimFormat
             // 
             this.panelInterimFormat.AutoSize = true;
             this.panelInterimFormat.Controls.Add(this.cmbInterimFormat);
             this.panelInterimFormat.Controls.Add(this.label9);
-            this.panelInterimFormat.Location = new System.Drawing.Point(127, 37);
+            this.panelInterimFormat.Location = new System.Drawing.Point(3, 37);
             this.panelInterimFormat.Name = "panelInterimFormat";
             this.panelInterimFormat.Size = new System.Drawing.Size(127, 28);
             this.panelInterimFormat.TabIndex = 5;
@@ -506,7 +473,7 @@
             this.panelFinalFormat.AutoSize = true;
             this.panelFinalFormat.Controls.Add(this.cmbFinalFormat);
             this.panelFinalFormat.Controls.Add(this.label10);
-            this.panelFinalFormat.Location = new System.Drawing.Point(260, 37);
+            this.panelFinalFormat.Location = new System.Drawing.Point(136, 37);
             this.panelFinalFormat.Name = "panelFinalFormat";
             this.panelFinalFormat.Size = new System.Drawing.Size(119, 28);
             this.panelFinalFormat.TabIndex = 6;
@@ -560,8 +527,6 @@
             this.panelCompression.PerformLayout();
             this.panelCompressionLevel.ResumeLayout(false);
             this.panelCompressionLevel.PerformLayout();
-            this.panelColorDepth.ResumeLayout(false);
-            this.panelColorDepth.PerformLayout();
             this.panelInterimFormat.ResumeLayout(false);
             this.panelInterimFormat.PerformLayout();
             this.panelFinalFormat.ResumeLayout(false);
@@ -602,10 +567,7 @@
         private System.Windows.Forms.Panel panelCompression;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cmbCompression;
-        private System.Windows.Forms.Panel panelColorDepth;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ToolStripMenuItem tsAbout;
-        private System.Windows.Forms.ComboBox cmbColorDepth;
         private System.Windows.Forms.Panel panelCompressionLevel;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.GroupBox groupBox1;
