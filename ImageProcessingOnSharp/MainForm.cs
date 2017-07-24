@@ -146,7 +146,7 @@ namespace ImageProcessingOnSharp
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
-                parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString());
+                parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString().ToLower());
                 _resultExtension = _originalExtension;
             }
             else if (option.Equals("HInterlacing+GZIP")
@@ -155,7 +155,10 @@ namespace ImageProcessingOnSharp
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel, interimFormat });
-                parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString());
+                parameters = string.Format("compression level = {0}; interim format = {1}; final format = {2}.",
+                    cmbCompressionLevel.Items[compressionLevel].ToString().ToLower(),
+                    interimFormat.ToString().ToLower(),
+                    finalFormat.ToString().ToLower());
                 _resultExtension = cmbFinalFormat.SelectedItem.ToString().ToLower();
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { finalFormat });
             }
@@ -163,7 +166,11 @@ namespace ImageProcessingOnSharp
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { waveletLevels, compressionLevel, interimFormat });
-                parameters = "-";
+                parameters = string.Format("wavelet levels = {0}; compression level = {1}; interim format = {2}; final format = {3}.",
+                    waveletLevels,
+                    cmbCompressionLevel.Items[compressionLevel].ToString().ToLower(),
+                    interimFormat.ToString().ToLower(),
+                    finalFormat.ToString().ToLower());
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { waveletLevels, finalFormat });
             }
 
@@ -189,7 +196,7 @@ namespace ImageProcessingOnSharp
             report.AppendLine(String.Format("Algorithm: {0}", cmbAlgorithm.SelectedItem));
             report.AppendLine(String.Format("Parameters: {0}", parAlgorithmParameters));
             double accuracy = ImageComparator.CalculateImagesEquality(_originalImage, _resultImage);
-            report.AppendLine(String.Format("Accuracy: {0}%", accuracy * 100));
+            report.Append(String.Format("Accuracy: {0}%", accuracy * 100));
 
             return report.ToString();
         }
