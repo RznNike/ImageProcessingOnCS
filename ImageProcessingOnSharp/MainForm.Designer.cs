@@ -55,6 +55,9 @@
             this.panelCompression = new System.Windows.Forms.Panel();
             this.cmbCompression = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.panelWaveletLevels = new System.Windows.Forms.Panel();
+            this.nudWaveletLevels = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
             this.panelCompressionLevel = new System.Windows.Forms.Panel();
             this.cmbCompressionLevel = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -76,6 +79,8 @@
             this.panelQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).BeginInit();
             this.panelCompression.SuspendLayout();
+            this.panelWaveletLevels.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWaveletLevels)).BeginInit();
             this.panelCompressionLevel.SuspendLayout();
             this.panelInterimFormat.SuspendLayout();
             this.panelFinalFormat.SuspendLayout();
@@ -89,7 +94,7 @@
             this.tsAbout});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(689, 24);
+            this.menuStrip.Size = new System.Drawing.Size(774, 24);
             this.menuStrip.TabIndex = 13;
             this.menuStrip.Text = "menuStrip1";
             // 
@@ -180,9 +185,9 @@
             this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 75F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 95F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(689, 512);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(774, 512);
             this.tableLayoutPanel1.TabIndex = 14;
             // 
             // groupBox1
@@ -190,9 +195,9 @@
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox1, 5);
             this.groupBox1.Controls.Add(this.rtbStatistic);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 420);
+            this.groupBox1.Location = new System.Drawing.Point(3, 412);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(683, 89);
+            this.groupBox1.Size = new System.Drawing.Size(768, 97);
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistic:";
@@ -204,7 +209,7 @@
             this.rtbStatistic.Name = "rtbStatistic";
             this.rtbStatistic.ReadOnly = true;
             this.rtbStatistic.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.rtbStatistic.Size = new System.Drawing.Size(677, 70);
+            this.rtbStatistic.Size = new System.Drawing.Size(762, 78);
             this.rtbStatistic.TabIndex = 1;
             this.rtbStatistic.Text = "";
             // 
@@ -213,9 +218,9 @@
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(317, 0);
+            this.label1.Location = new System.Drawing.Point(360, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 282);
+            this.label1.Size = new System.Drawing.Size(54, 309);
             this.label1.TabIndex = 15;
             this.label1.Text = "→";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -227,7 +232,7 @@
             this.pboxOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pboxOriginal.Location = new System.Drawing.Point(3, 3);
             this.pboxOriginal.Name = "pboxOriginal";
-            this.pboxOriginal.Size = new System.Drawing.Size(308, 276);
+            this.pboxOriginal.Size = new System.Drawing.Size(351, 303);
             this.pboxOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pboxOriginal.TabIndex = 16;
             this.pboxOriginal.TabStop = false;
@@ -237,9 +242,9 @@
             this.pboxResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanel1.SetColumnSpan(this.pboxResult, 2);
             this.pboxResult.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pboxResult.Location = new System.Drawing.Point(377, 3);
+            this.pboxResult.Location = new System.Drawing.Point(420, 3);
             this.pboxResult.Name = "pboxResult";
-            this.pboxResult.Size = new System.Drawing.Size(309, 276);
+            this.pboxResult.Size = new System.Drawing.Size(351, 303);
             this.pboxResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pboxResult.TabIndex = 17;
             this.pboxResult.TabStop = false;
@@ -249,7 +254,7 @@
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(3, 282);
+            this.label2.Location = new System.Drawing.Point(3, 309);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 40);
             this.label2.TabIndex = 18;
@@ -260,9 +265,9 @@
             // 
             this.btnLoad.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnLoad.Location = new System.Drawing.Point(95, 285);
+            this.btnLoad.Location = new System.Drawing.Point(95, 312);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(216, 34);
+            this.btnLoad.Size = new System.Drawing.Size(259, 34);
             this.btnLoad.TabIndex = 19;
             this.btnLoad.Text = "choose image file";
             this.btnLoad.UseVisualStyleBackColor = true;
@@ -273,7 +278,7 @@
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(377, 282);
+            this.label3.Location = new System.Drawing.Point(420, 309);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(86, 40);
             this.label3.TabIndex = 20;
@@ -284,9 +289,9 @@
             // 
             this.btnApplyAlgorithm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnApplyAlgorithm.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnApplyAlgorithm.Location = new System.Drawing.Point(469, 285);
+            this.btnApplyAlgorithm.Location = new System.Drawing.Point(512, 312);
             this.btnApplyAlgorithm.Name = "btnApplyAlgorithm";
-            this.btnApplyAlgorithm.Size = new System.Drawing.Size(217, 34);
+            this.btnApplyAlgorithm.Size = new System.Drawing.Size(259, 34);
             this.btnApplyAlgorithm.TabIndex = 21;
             this.btnApplyAlgorithm.Text = "apply algorithm & back";
             this.btnApplyAlgorithm.UseMnemonic = false;
@@ -298,9 +303,9 @@
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox2, 5);
             this.groupBox2.Controls.Add(this.flowLayoutPanel1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 325);
+            this.groupBox2.Location = new System.Drawing.Point(3, 352);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(683, 89);
+            this.groupBox2.Size = new System.Drawing.Size(768, 54);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings:";
@@ -310,13 +315,14 @@
             this.flowLayoutPanel1.Controls.Add(this.panelAlgorithm);
             this.flowLayoutPanel1.Controls.Add(this.panelQuality);
             this.flowLayoutPanel1.Controls.Add(this.panelCompression);
+            this.flowLayoutPanel1.Controls.Add(this.panelWaveletLevels);
             this.flowLayoutPanel1.Controls.Add(this.panelCompressionLevel);
             this.flowLayoutPanel1.Controls.Add(this.panelInterimFormat);
             this.flowLayoutPanel1.Controls.Add(this.panelFinalFormat);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(677, 70);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(762, 35);
             this.flowLayoutPanel1.TabIndex = 0;
             // 
             // panelAlgorithm
@@ -412,12 +418,53 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Compression:";
             // 
+            // panelWaveletLevels
+            // 
+            this.panelWaveletLevels.AutoSize = true;
+            this.panelWaveletLevels.Controls.Add(this.nudWaveletLevels);
+            this.panelWaveletLevels.Controls.Add(this.label11);
+            this.panelWaveletLevels.Location = new System.Drawing.Point(466, 3);
+            this.panelWaveletLevels.Name = "panelWaveletLevels";
+            this.panelWaveletLevels.Size = new System.Drawing.Size(123, 28);
+            this.panelWaveletLevels.TabIndex = 8;
+            // 
+            // nudWaveletLevels
+            // 
+            this.nudWaveletLevels.Location = new System.Drawing.Point(86, 5);
+            this.nudWaveletLevels.Maximum = new decimal(new int[] {
+            8,
+            0,
+            0,
+            0});
+            this.nudWaveletLevels.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nudWaveletLevels.Name = "nudWaveletLevels";
+            this.nudWaveletLevels.Size = new System.Drawing.Size(34, 20);
+            this.nudWaveletLevels.TabIndex = 2;
+            this.nudWaveletLevels.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(3, 7);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(80, 13);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "Wavelet levels:";
+            // 
             // panelCompressionLevel
             // 
             this.panelCompressionLevel.AutoSize = true;
             this.panelCompressionLevel.Controls.Add(this.cmbCompressionLevel);
             this.panelCompressionLevel.Controls.Add(this.label8);
-            this.panelCompressionLevel.Location = new System.Drawing.Point(466, 3);
+            this.panelCompressionLevel.Location = new System.Drawing.Point(3, 37);
             this.panelCompressionLevel.Name = "panelCompressionLevel";
             this.panelCompressionLevel.Size = new System.Drawing.Size(176, 28);
             this.panelCompressionLevel.TabIndex = 4;
@@ -445,7 +492,7 @@
             this.panelInterimFormat.AutoSize = true;
             this.panelInterimFormat.Controls.Add(this.cmbInterimFormat);
             this.panelInterimFormat.Controls.Add(this.label9);
-            this.panelInterimFormat.Location = new System.Drawing.Point(3, 37);
+            this.panelInterimFormat.Location = new System.Drawing.Point(185, 37);
             this.panelInterimFormat.Name = "panelInterimFormat";
             this.panelInterimFormat.Size = new System.Drawing.Size(127, 28);
             this.panelInterimFormat.TabIndex = 5;
@@ -473,7 +520,7 @@
             this.panelFinalFormat.AutoSize = true;
             this.panelFinalFormat.Controls.Add(this.cmbFinalFormat);
             this.panelFinalFormat.Controls.Add(this.label10);
-            this.panelFinalFormat.Location = new System.Drawing.Point(136, 37);
+            this.panelFinalFormat.Location = new System.Drawing.Point(318, 37);
             this.panelFinalFormat.Name = "panelFinalFormat";
             this.panelFinalFormat.Size = new System.Drawing.Size(119, 28);
             this.panelFinalFormat.TabIndex = 6;
@@ -500,11 +547,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(689, 536);
+            this.ClientSize = new System.Drawing.Size(774, 536);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.menuStrip);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(705, 575);
+            this.MinimumSize = new System.Drawing.Size(790, 575);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ImageProcessing";
@@ -525,6 +572,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).EndInit();
             this.panelCompression.ResumeLayout(false);
             this.panelCompression.PerformLayout();
+            this.panelWaveletLevels.ResumeLayout(false);
+            this.panelWaveletLevels.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudWaveletLevels)).EndInit();
             this.panelCompressionLevel.ResumeLayout(false);
             this.panelCompressionLevel.PerformLayout();
             this.panelInterimFormat.ResumeLayout(false);
@@ -579,6 +629,9 @@
         private System.Windows.Forms.Panel panelFinalFormat;
         private System.Windows.Forms.ComboBox cmbFinalFormat;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Panel panelWaveletLevels;
+        private System.Windows.Forms.NumericUpDown nudWaveletLevels;
+        private System.Windows.Forms.Label label11;
     }
 }
 

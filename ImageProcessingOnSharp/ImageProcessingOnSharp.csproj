@@ -56,6 +56,8 @@
     </Compile>
     <Compile Include="Algorithms\Algorithm.cs" />
     <Compile Include="Algorithms\GZIP.cs" />
+    <Compile Include="Algorithms\Wavelets\HaarWavelet.cs" />
+    <Compile Include="Algorithms\WaveletWithGZIP.cs" />
     <Compile Include="Algorithms\XInterlacingWithGZIP.cs" />
     <Compile Include="Algorithms\VInterlacingWithGZIP.cs" />
     <Compile Include="Algorithms\HInterlacingWithGZIP.cs" />
