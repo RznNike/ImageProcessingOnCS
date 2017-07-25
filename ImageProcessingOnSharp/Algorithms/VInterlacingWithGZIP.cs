@@ -12,7 +12,11 @@ namespace ImageProcessingOnSharp
         private VInterlacingWithGZIP()
         {
         }
-        
+
+        /// <summary>
+        /// Returns singletone instance
+        /// </summary>
+        /// <returns>Instance</returns>
         public static VInterlacingWithGZIP GetInstance()
         {
             if (_instance == null)
@@ -22,6 +26,12 @@ namespace ImageProcessingOnSharp
             return _instance;
         }
 
+        /// <summary>
+        /// Forward application of the algorithm
+        /// </summary>
+        /// <param name="parOriginalImage">Original image stream</param>
+        /// <param name="parArguments">List of an arguments (long qualityLevel, ImageFormat interimFormat)</param>
+        /// <returns>Compressed image stream</returns>
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
             Bitmap original = new Bitmap(parOriginalImage);
@@ -33,6 +43,12 @@ namespace ImageProcessingOnSharp
             return hInterlacing.CompressImage(rotatedImage, parArguments);
         }
 
+        /// <summary>
+        /// Inverse application of the algorithm
+        /// </summary>
+        /// <param name="parCompressedImage">Compressed image stream</param>
+        /// <param name="parArguments">List of an arguments (ImageFormat finalFormat)</param>
+        /// <returns>Decompressed image stream</returns>
         public override Stream DecompressImage(Stream parCompressedImage, List<object> parArguments)
         {
             HInterlacingWithGZIP hInterlacing = HInterlacingWithGZIP.GetInstance();
@@ -46,24 +62,19 @@ namespace ImageProcessingOnSharp
             return reconstructedImage;
         }
 
-        private int FindAverageColor(int parColor1, int parColor2)
-        {
-            Color color1 = Color.FromArgb(parColor1);
-            Color color2 = Color.FromArgb(parColor2);
-            int A = (color1.A + color2.A) / 2;
-            int R = (color1.R + color2.R) / 2;
-            int G = (color1.G + color2.G) / 2;
-            int B = (color1.B + color2.B) / 2;
-
-            Color resultColor = Color.FromArgb(A, R, G, B);
-            return resultColor.ToArgb();
-        }
-
+        /// <summary>
+        /// Returns file extension of algorithm inverse application result
+        /// </summary>
+        /// <returns>Extension without dot (string)</returns>
         public override string GetFileExtension()
         {
             return "bmp";
         }
 
+        /// <summary>
+        /// Overrides original ToString() method
+        /// </summary>
+        /// <returns>Algorithm name</returns>
         public override string ToString()
         {
             return "VInterlacing+GZIP";

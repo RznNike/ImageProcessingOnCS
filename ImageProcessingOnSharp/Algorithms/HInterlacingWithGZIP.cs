@@ -13,7 +13,11 @@ namespace ImageProcessingOnSharp
         private HInterlacingWithGZIP()
         {
         }
-        
+
+        /// <summary>
+        /// Returns singletone instance
+        /// </summary>
+        /// <returns>Instance</returns>
         public static HInterlacingWithGZIP GetInstance()
         {
             if (_instance == null)
@@ -23,29 +27,39 @@ namespace ImageProcessingOnSharp
             return _instance;
         }
 
+        /// <summary>
+        /// Forward application of the algorithm
+        /// </summary>
+        /// <param name="parOriginalImage">Original image stream</param>
+        /// <param name="parArguments">List of an arguments (long qualityLevel, ImageFormat interimFormat)</param>
+        /// <returns>Compressed image stream</returns>
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
             Bitmap original = new Bitmap(parOriginalImage);
-            byte lastRowIsOdd = (byte)(original.Height % 2);
-            Bitmap modded = new Bitmap(original.Width, (original.Height + 1) / 2, original.PixelFormat);
+            int originalWidth = original.Width;
+            int originalHeight = original.Height;
+            int moddedWidth = originalWidth;
+            int moddedHeight = (original.Height + 1) / 2;
+            byte lastRowIsOdd = (byte)(originalHeight % 2);
+            Bitmap modded = new Bitmap(moddedWidth, moddedHeight, original.PixelFormat);
 
-            BitmapData bdOriginal = original.LockBits(new Rectangle(0, 0, original.Width, original.Height),
+            BitmapData bdOriginal = original.LockBits(new Rectangle(0, 0, originalWidth, originalHeight),
                                                       ImageLockMode.ReadOnly,
                                                       PixelFormat.Format32bppArgb);
-            int[ ] bitsOriginal = new int[bdOriginal.Stride / 4 * bdOriginal.Height];
+            int[ ] bitsOriginal = new int[originalWidth * originalHeight];
             Marshal.Copy(bdOriginal.Scan0, bitsOriginal, 0, bitsOriginal.Length);
             // --/--
-            BitmapData bdModded = modded.LockBits(new Rectangle(0, 0, modded.Width, modded.Height),
+            BitmapData bdModded = modded.LockBits(new Rectangle(0, 0, moddedWidth, moddedHeight),
                                                   ImageLockMode.ReadWrite,
                                                   PixelFormat.Format32bppArgb);
-            int[ ] bitsModded = new int[bdModded.Stride / 4 * bdModded.Height];
+            int[ ] bitsModded = new int[moddedWidth * moddedHeight];
             Marshal.Copy(bdModded.Scan0, bitsModded, 0, bitsModded.Length);
 
-            for (int i = 0; i < modded.Width; i++)
+            for (int i = 0; i < moddedHeight; i++)
             {
-                for (int j = 0; j < modded.Height; j++)
+                for (int j = 0; j < moddedWidth; j++)
                 {
-                    bitsModded[i + bdModded.Stride / 4 * j] = bitsOriginal[i + bdModded.Stride / 2 * j];
+                    bitsModded[i * moddedWidth + j] = bitsOriginal[i * moddedWidth * 2 + j];
                 }
             }
             Marshal.Copy(bitsModded, 0, bdModded.Scan0, bitsModded.Length);
@@ -64,6 +78,12 @@ namespace ImageProcessingOnSharp
             return compressedImage;
         }
 
+        /// <summary>
+        /// Inverse application of the algorithm
+        /// </summary>
+        /// <param name="parCompressedImage">Compressed image stream</param>
+        /// <param name="parArguments">List of an arguments (ImageFormat finalFormat)</param>
+        /// <returns>Decompressed image stream</returns>
         public override Stream DecompressImage(Stream parCompressedImage, List<object> parArguments)
         {
             GZIP gzip = GZIP.GetInstance();
@@ -95,21 +115,21 @@ namespace ImageProcessingOnSharp
             int[ ] bitsReconstructed = new int[bdReconstructed.Stride / 4 * bdReconstructed.Height];
             Marshal.Copy(bdReconstructed.Scan0, bitsReconstructed, 0, bitsReconstructed.Length);
             
-            int width = interlaced.Width;
-            int height = interlaced.Height;
+            int interlacedWidth = interlaced.Width;
+            int interlacedHeight = interlaced.Height;
 
-            for (int i = 0; i < width; i++)
+            for (int j = 0; j < interlacedWidth; j++)
             {
-                for (int j = 0; j < height - 1; j++)
+                for (int i = 0; i < interlacedHeight - 1; i++)
                 {
-                    bitsReconstructed[i + width * 2 * j] = bitsInterlaced[i + width * j];
-                    bitsReconstructed[i + width * (2 * j + 1)] =
-                        this.FindAverageColor(bitsInterlaced[i + width * j], bitsInterlaced[i + width * (j + 1)]);
+                    bitsReconstructed[i * interlacedWidth * 2 + j] = bitsInterlaced[i * interlacedWidth + j];
+                    bitsReconstructed[(i * 2 + 1) * interlacedWidth + j] =
+                        this.FindAverageColor(bitsInterlaced[i * interlacedWidth + j], bitsInterlaced[(i + 1) * interlacedWidth + j]);
                 }
-                bitsReconstructed[i + width * 2 * (height - 1)] = bitsInterlaced[i + width * (height - 1)];
+                bitsReconstructed[(interlacedHeight - 1) * 2 * interlacedWidth + j] = bitsInterlaced[(interlacedHeight - 1) * interlacedWidth + j];
                 if (!lastRowIsOdd)
                 {
-                    bitsReconstructed[i + width * (2 * (height - 1) + 1)] = bitsInterlaced[i + width * (height - 1)];
+                    bitsReconstructed[(reconstructedHeight - 1) * interlacedWidth + j] = bitsInterlaced[(interlacedHeight - 1) * interlacedWidth + j];
                 }
             }
             Marshal.Copy(bitsReconstructed, 0, bdReconstructed.Scan0, bitsReconstructed.Length);
@@ -134,12 +154,20 @@ namespace ImageProcessingOnSharp
             Color resultColor = Color.FromArgb(A, R, G, B);
             return resultColor.ToArgb();
         }
-
+        
+        /// <summary>
+        /// Returns file extension of algorithm inverse application result
+        /// </summary>
+        /// <returns>Extension without dot (string)</returns>
         public override string GetFileExtension()
         {
             return "bmp";
         }
 
+        /// <summary>
+        /// Overrides original ToString() method
+        /// </summary>
+        /// <returns>Algorithm name</returns>
         public override string ToString()
         {
             return "HInterlacing+GZIP";

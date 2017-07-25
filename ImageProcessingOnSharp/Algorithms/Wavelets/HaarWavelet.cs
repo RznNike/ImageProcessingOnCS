@@ -4,13 +4,17 @@ using System.Runtime.InteropServices;
 
 namespace ImageProcessingOnSharp
 {
+    /// <summary>
+    /// Realization of Haar's wavelet algorithm
+    /// </summary>
     public static class HaarWavelet
     {
-        private const double w0 = 0.5;
-        private const double w1 = -0.5;
-        private const double s0 = 0.5;
-        private const double s1 = 0.5;
-
+        /// <summary>
+        /// Do a transformation in forward or inverse direction
+        /// </summary>
+        /// <param name="refImage">Ref to an image</param>
+        /// <param name="parForwardDirection">True, if direction is forward</param>
+        /// <param name="parLevels">Number of algorithm applications</param>
         public static void ApplyTransform(ref Bitmap refImage, bool parForwardDirection, int parLevels)
         {
             int width = refImage.Width;
@@ -19,10 +23,10 @@ namespace ImageProcessingOnSharp
             double[ , ] greenMatrix = new double[height, width];
             double[ , ] blueMatrix = new double[height, width];
 
-            BitmapData bitmapData = refImage.LockBits(new Rectangle(0, 0, refImage.Width, refImage.Height),
+            BitmapData bitmapData = refImage.LockBits(new Rectangle(0, 0, width, height),
                                                       ImageLockMode.ReadWrite,
                                                       PixelFormat.Format32bppArgb);
-            int[ ] bitmapBits = new int[bitmapData.Stride / 4 * bitmapData.Height];
+            int[ ] bitmapBits = new int[width * height];
             Marshal.Copy(bitmapData.Scan0, bitmapBits, 0, bitmapBits.Length);
 
             for (int i = 0; i < height; i++)
@@ -78,102 +82,128 @@ namespace ImageProcessingOnSharp
             return value;
         }
 
-        private static void ForwardWaveletTransformation(double[ ] data)
+        private static void ForwardWaveletTransformation(double[ ] parData)
         {
-            double[ ] temp = new double[data.Length];
+            double[ ] result = new double[parData.Length];
 
-            int h = data.Length >> 1;
-            for (int i = 0; i < h; i++)
+            int halfPosition = parData.Length / 2;
+            for (int i = 0; i < halfPosition; i++)
             {
-                int k = (i << 1);
-                temp[i] = data[k] * s0 + data[k + 1] * s1;
-                temp[i + h] = data[k] * w0 + data[k + 1] * w1;
+                int ix2 = i * 2;
+                result[i] = (parData[ix2] + parData[ix2 + 1]) / 2;
+                result[i + halfPosition] = (parData[ix2] - parData[ix2 + 1]) / 2;
             }
-
-            for (int i = 0; i < data.Length; i++)
-                data[i] = temp[i];
+            result.CopyTo(parData, 0);
         }
 
-        private static void ForwardWaveletTransformation(double[ , ] data, int iterations)
+        private static void ForwardWaveletTransformation(double[ , ] parData, int parLevels)
         {
-            int rows = data.GetLength(0);
-            int cols = data.GetLength(1);
+            int rowNumber = parData.GetLength(0);
+            int columnNumber = parData.GetLength(1);
 
-            double[ ] row = new double[cols];
-            double[ ] col = new double[rows];
+            double[ ] row = new double[columnNumber];
+            double[ ] column = new double[rowNumber];
 
-            for (int k = 0; k < iterations; k++)
+            for (int level = 0; level < parLevels; level++)
             {
-                for (int i = 0; i < rows; i++)
+                for (int i = 0; i < rowNumber; i++)
                 {
-                    for (int j = 0; j < row.Length; j++)
-                        row[j] = data[i, j];
-
-                    ForwardWaveletTransformation(row);
-
-                    for (int j = 0; j < row.Length; j++)
-                        data[i, j] = row[j];
+                    ApplyTransformationToRow(parData, columnNumber, row, i, true);
                 }
 
-                for (int j = 0; j < cols; j++)
+                for (int j = 0; j < columnNumber; j++)
                 {
-                    for (int i = 0; i < col.Length; i++)
-                        col[i] = data[i, j];
-
-                    ForwardWaveletTransformation(col);
-
-                    for (int i = 0; i < col.Length; i++)
-                        data[i, j] = col[i];
+                    ApplyTransformationToColumn(parData, rowNumber, column, j, true);
                 }
             }
         }
 
-        private static void InverseWaveletTransformation(double[ ] data)
+        private static void ApplyTransformationToRow(
+            double[ , ] parData,
+            int parColumnNumber,
+            double[ ] parRow,
+            int parRowPosition,
+            bool parForwardDirection)
         {
-            double[ ] temp = new double[data.Length];
-
-            int h = data.Length >> 1;
-            for (int i = 0; i < h; i++)
+            for (int j = 0; j < parColumnNumber; j++)
             {
-                int k = (i << 1);
-                temp[k] = (data[i] * s0 + data[i + h] * w0) / w0;
-                temp[k + 1] = (data[i] * s1 + data[i + h] * w1) / s0;
+                parRow[j] = parData[parRowPosition, j];
             }
 
-            for (int i = 0; i < data.Length; i++)
-                data[i] = temp[i];
+            if (parForwardDirection)
+            {
+                ForwardWaveletTransformation(parRow);
+            }
+            else
+            {
+                InverseWaveletTransformation(parRow);
+            }
+
+            for (int j = 0; j < parColumnNumber; j++)
+            {
+                parData[parRowPosition, j] = parRow[j];
+            }
         }
 
-        private static void InverseWaveletTransformation(double[ , ] data, int iterations)
+        private static void ApplyTransformationToColumn(
+            double[ , ] parData,
+            int parRowNumber,
+            double[ ] parColumn,
+            int parColumnPosition,
+            bool parForwardDirection)
         {
-            int rows = data.GetLength(0);
-            int cols = data.GetLength(1);
-
-            double[ ] col = new double[rows];
-            double[ ] row = new double[cols];
-
-            for (int l = 0; l < iterations; l++)
+            for (int i = 0; i < parRowNumber; i++)
             {
-                for (int j = 0; j < cols; j++)
+                parColumn[i] = parData[i, parColumnPosition];
+            }
+
+            if (parForwardDirection)
+            {
+                ForwardWaveletTransformation(parColumn);
+            }
+            else
+            {
+                InverseWaveletTransformation(parColumn);
+            }
+
+            for (int i = 0; i < parRowNumber; i++)
+            {
+                parData[i, parColumnPosition] = parColumn[i];
+            }
+        }
+
+        private static void InverseWaveletTransformation(double[ ] parData)
+        {
+            double[ ] result = new double[parData.Length];
+
+            int halfPosition = parData.Length / 2;
+            for (int i = 0; i < halfPosition; i++)
+            {
+                int ix2 = i * 2;
+                result[ix2] = parData[i] + parData[i + halfPosition];
+                result[ix2 + 1] = parData[i] - parData[i + halfPosition];
+            }
+            result.CopyTo(parData, 0);
+        }
+
+        private static void InverseWaveletTransformation(double[ , ] parData, int parLevels)
+        {
+            int rowNumber = parData.GetLength(0);
+            int columnNumber = parData.GetLength(1);
+
+            double[ ] row = new double[columnNumber];
+            double[ ] column = new double[rowNumber];
+
+            for (int level = 0; level < parLevels; level++)
+            {
+                for (int j = 0; j < columnNumber; j++)
                 {
-                    for (int i = 0; i < rows; i++)
-                        col[i] = data[i, j];
-
-                    InverseWaveletTransformation(col);
-
-                    for (int i = 0; i < col.Length; i++)
-                        data[i, j] = col[i];
+                    ApplyTransformationToColumn(parData, rowNumber, column, j, false);
                 }
 
-                for (int i = 0; i < rows; i++)
+                for (int i = 0; i < rowNumber; i++)
                 {
-                    for (int j = 0; j < row.Length; j++)
-                        row[j] = data[i, j];
-
-                    InverseWaveletTransformation(row);
-
-                    for (int j = 0; j < row.Length; j++)
-                        data[i, j] = row[j];
+                    ApplyTransformationToRow(parData, columnNumber, row, i, false);
                 }
             }
         }

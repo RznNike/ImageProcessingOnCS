@@ -12,6 +12,10 @@ namespace ImageProcessingOnSharp
         {
         }
         
+        /// <summary>
+        /// Returns singletone instance
+        /// </summary>
+        /// <returns>Instance</returns>
         public static GZIP GetInstance()
         {
             if (_instance == null)
@@ -21,6 +25,12 @@ namespace ImageProcessingOnSharp
             return _instance;
         }
 
+        /// <summary>
+        /// Forward application of the algorithm
+        /// </summary>
+        /// <param name="parOriginalImage">Original image stream</param>
+        /// <param name="parArguments">List of an arguments (int compressionLevel)</param>
+        /// <returns>Compressed image stream</returns>
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
             parOriginalImage.Position = 0;
@@ -32,6 +42,12 @@ namespace ImageProcessingOnSharp
             return compressedImage;
         }
 
+        /// <summary>
+        /// Inverse application of the algorithm
+        /// </summary>
+        /// <param name="parCompressedImage">Compressed image stream</param>
+        /// <param name="parArguments">List of an arguments (empty)</param>
+        /// <returns>Decompressed image stream</returns>
         public override Stream DecompressImage(Stream parCompressedImage, List<object> parArguments)
         {
             parCompressedImage.Position = 0;
@@ -42,11 +58,19 @@ namespace ImageProcessingOnSharp
             return decompressedImage;
         }
 
+        /// <summary>
+        /// Returns file extension of algorithm inverse application result
+        /// </summary>
+        /// <returns>Extension without dot (string)</returns>
         public override string GetFileExtension()
         {
             return "gz";
         }
 
+        /// <summary>
+        /// Overrides original ToString() method
+        /// </summary>
+        /// <returns>Algorithm name</returns>
         public override string ToString()
         {
             return "GZIP";

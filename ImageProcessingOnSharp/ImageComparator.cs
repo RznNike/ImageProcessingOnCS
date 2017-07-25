@@ -1,17 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageProcessingOnSharp
 {
+    /// <summary>
+    /// Image comparator
+    /// </summary>
     public static class ImageComparator
     {
+        /// <summary>
+        /// Comparation pf two images pixel by pixel
+        /// </summary>
+        /// <param name="parImageOriginal">First image stream</param>
+        /// <param name="parImageModded">Second image stream</param>
+        /// <returns>Equality value (0..1)</returns>
         public static double CalculateImagesEquality(Stream parImageOriginal, Stream parImageModded)
         {
             Bitmap original = new Bitmap(parImageOriginal);

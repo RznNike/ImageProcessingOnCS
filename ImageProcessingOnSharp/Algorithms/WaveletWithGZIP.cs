@@ -13,6 +13,10 @@ namespace ImageProcessingOnSharp
         {
         }
 
+        /// <summary>
+        /// Returns singletone instance
+        /// </summary>
+        /// <returns>Instance</returns>
         public static WaveletWithGZIP GetInstance()
         {
             if (_instance == null)
@@ -22,6 +26,12 @@ namespace ImageProcessingOnSharp
             return _instance;
         }
 
+        /// <summary>
+        /// Forward application of the algorithm
+        /// </summary>
+        /// <param name="parOriginalImage">Original image stream</param>
+        /// <param name="parArguments">List of an arguments (long qualityLevel, ImageFormat interimFormat)</param>
+        /// <returns>Compressed image stream</returns>
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
             Bitmap original = new Bitmap(parOriginalImage);
@@ -39,6 +49,12 @@ namespace ImageProcessingOnSharp
             return compressedImage;
         }
 
+        /// <summary>
+        /// Inverse application of the algorithm
+        /// </summary>
+        /// <param name="parCompressedImage">Compressed image stream</param>
+        /// <param name="parArguments">List of an arguments (ImageFormat finalFormat)</param>
+        /// <returns>Decompressed image stream</returns>
         public override Stream DecompressImage(Stream parCompressedImage, List<object> parArguments)
         {
             GZIP gzip = GZIP.GetInstance();
@@ -56,11 +72,19 @@ namespace ImageProcessingOnSharp
             return result;
         }
 
+        /// <summary>
+        /// Returns file extension of algorithm inverse application result
+        /// </summary>
+        /// <returns>Extension without dot (string)</returns>
         public override string GetFileExtension()
         {
             return "bmp";
         }
 
+        /// <summary>
+        /// Overrides original ToString() method
+        /// </summary>
+        /// <returns>Algorithm name</returns>
         public override string ToString()
         {
             return "Wavelet+GZIP";

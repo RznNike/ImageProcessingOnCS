@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -8,16 +9,45 @@ using System.Windows.Forms;
 
 namespace ImageProcessingOnSharp
 {
+    /// <summary>
+    /// Main form
+    /// </summary>
     public partial class MainForm : Form
     {
-        Stream _originalImage;
-        Stream _resultImage;
-        string _originalExtension;
-        string _resultExtension;
+        private Stream _originalImage = null;
+        private Stream _resultImage = null;
+        private string _originalExtension = null;
+        private string _resultExtension = null;
+        private Hashtable _panels = null;
 
+        /// <summary>
+        /// Main form constructor
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
+
+            _panels = new Hashtable();
+            _panels.Add(panelQuality, new List<string>() { "JPEG" });
+            _panels.Add(panelCompression, new List<string>() { "TIFF" });
+            _panels.Add(panelWaveletLevels, new List<string>() { "Wavelet+GZIP" });
+            _panels.Add(panelCompressionLevel, new List<string>()
+                { "GZIP",
+                "HInterlacing+GZIP",
+                "VInterlacing+GZIP",
+                "XInterlacing+GZIP",
+                "Wavelet+GZIP" });
+            _panels.Add(panelInterimFormat, new List<string>()
+                { "HInterlacing+GZIP",
+                "VInterlacing+GZIP",
+                "XInterlacing+GZIP",
+                "Wavelet+GZIP" });
+            _panels.Add(panelFinalFormat, new List<string>()
+                { "HInterlacing+GZIP",
+                "VInterlacing+GZIP",
+                "XInterlacing+GZIP",
+                "Wavelet+GZIP" });
+
             cmbAlgorithm.Items.Clear();
             cmbAlgorithm.Items.Add(JPEG.GetInstance());
             cmbAlgorithm.Items.Add(PNG.GetInstance());
@@ -88,6 +118,7 @@ namespace ImageProcessingOnSharp
         {
             if (_resultImage == null)
             {
+                MessageBox.Show("You should apply algorithm to get result.", "No result", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -113,6 +144,7 @@ namespace ImageProcessingOnSharp
         {
             if (_originalImage == null)
             {
+                MessageBox.Show("You should select original image first.", "No target image", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -123,24 +155,26 @@ namespace ImageProcessingOnSharp
             _resultExtension = algorithm.GetFileExtension();
             object finalFormat = cmbFinalFormat.SelectedItem;
             object interimFormat = cmbInterimFormat.SelectedItem;
-            int waveletLevels = (int)nudWaveletLevels.Value;
 
             if (option.Equals("JPEG"))
             {
                 long qualityLevel = (long)nudQualityLevel.Value;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
                 parameters = string.Format("quality = {0}%.", qualityLevel);
+                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
             }
             else if (option.Equals("PNG"))
             {
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { });
                 parameters = "-";
+                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
             }
             else if (option.Equals("TIFF"))
             {
                 int compression = cmbCompression.SelectedIndex;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression });
                 parameters = string.Format("compression = {0}.", cmbCompression.Items[compression].ToString());
+                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
             }
             else if (option.Equals("GZIP"))
             {
@@ -148,6 +182,7 @@ namespace ImageProcessingOnSharp
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
                 parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString().ToLower());
                 _resultExtension = _originalExtension;
+                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
             }
             else if (option.Equals("HInterlacing+GZIP")
                      || option.Equals("VInterlacing+GZIP")
@@ -164,6 +199,7 @@ namespace ImageProcessingOnSharp
             }
             else if (option.Equals("Wavelet+GZIP"))
             {
+                int waveletLevels = (int)nudWaveletLevels.Value;
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { waveletLevels, compressionLevel, interimFormat });
                 parameters = string.Format("wavelet levels = {0}; compression level = {1}; interim format = {2}; final format = {3}.",
@@ -171,16 +207,10 @@ namespace ImageProcessingOnSharp
                     cmbCompressionLevel.Items[compressionLevel].ToString().ToLower(),
                     interimFormat.ToString().ToLower(),
                     finalFormat.ToString().ToLower());
+                _resultExtension = cmbFinalFormat.SelectedItem.ToString().ToLower();
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { waveletLevels, finalFormat });
             }
-
-            if (!option.Equals("HInterlacing+GZIP")
-                && !option.Equals("VInterlacing+GZIP")
-                && !option.Equals("XInterlacing+GZIP")
-                && !option.Equals("Wavelet+GZIP"))
-            {
-                _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
-            }
+            
             rtbStatistic.Text = this.MakeReport(compressedImage, parameters);
             pboxResult.Image = new Bitmap(_resultImage);
         }
@@ -204,61 +234,20 @@ namespace ImageProcessingOnSharp
         private void cmbAlgorithm_SelectedValueChanged(object sender, EventArgs e)
         {
             string option = cmbAlgorithm.SelectedItem.ToString();
-            if (option.Equals("JPEG"))
+
+            IEnumerator enumerator = _panels.Keys.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                panelQuality.Visible = true;
-                panelCompression.Visible = false;
-                panelWaveletLevels.Visible = false;
-                panelCompressionLevel.Visible = false;
-                panelInterimFormat.Visible = false;
-                panelFinalFormat.Visible = false;
-            }
-            else if (option.Equals("PNG"))
-            {
-                panelQuality.Visible = false;
-                panelCompression.Visible = false;
-                panelWaveletLevels.Visible = false;
-                panelCompressionLevel.Visible = false;
-                panelInterimFormat.Visible = false;
-                panelFinalFormat.Visible = false;
-            }
-            else if (option.Equals("TIFF"))
-            {
-                panelQuality.Visible = false;
-                panelCompression.Visible = true;
-                panelWaveletLevels.Visible = false;
-                panelCompressionLevel.Visible = false;
-                panelInterimFormat.Visible = false;
-                panelFinalFormat.Visible = false;
-            }
-            else if (option.Equals("GZIP"))
-            {
-                panelQuality.Visible = false;
-                panelCompression.Visible = false;
-                panelWaveletLevels.Visible = false;
-                panelCompressionLevel.Visible = true;
-                panelInterimFormat.Visible = false;
-                panelFinalFormat.Visible = false;
-            }
-            else if (option.Equals("HInterlacing+GZIP")
-                     || option.Equals("VInterlacing+GZIP")
-                     || option.Equals("XInterlacing+GZIP"))
-            {
-                panelQuality.Visible = false;
-                panelCompression.Visible = false;
-                panelWaveletLevels.Visible = false;
-                panelCompressionLevel.Visible = true;
-                panelInterimFormat.Visible = true;
-                panelFinalFormat.Visible = true;
-            }
-            else if (option.Equals("Wavelet+GZIP"))
-            {
-                panelQuality.Visible = false;
-                panelCompression.Visible = false;
-                panelWaveletLevels.Visible = true;
-                panelCompressionLevel.Visible = true;
-                panelInterimFormat.Visible = true;
-                panelFinalFormat.Visible = true;
+                Panel panel = (Panel)enumerator.Current;
+                List<string> list = (List<string>)_panels[panel];
+                if (list.Contains(option))
+                {
+                    panel.Visible = true;
+                }
+                else
+                {
+                    panel.Visible = false;
+                }
             }
         }
 

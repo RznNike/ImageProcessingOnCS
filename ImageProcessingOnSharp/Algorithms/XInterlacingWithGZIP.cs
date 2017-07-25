@@ -13,7 +13,11 @@ namespace ImageProcessingOnSharp
         private XInterlacingWithGZIP()
         {
         }
-        
+
+        /// <summary>
+        /// Returns singletone instance
+        /// </summary>
+        /// <returns>Instance</returns>
         public static XInterlacingWithGZIP GetInstance()
         {
             if (_instance == null)
@@ -23,36 +27,42 @@ namespace ImageProcessingOnSharp
             return _instance;
         }
 
+        /// <summary>
+        /// Forward application of the algorithm
+        /// </summary>
+        /// <param name="parOriginalImage">Original image stream</param>
+        /// <param name="parArguments">List of an arguments (long qualityLevel, ImageFormat interimFormat)</param>
+        /// <returns>Compressed image stream</returns>
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
             Bitmap original = new Bitmap(parOriginalImage);
-            byte lastColumnIsOdd = (byte)(original.Width % 2);
-            Bitmap modded = new Bitmap((original.Width + 1) / 2, original.Height, original.PixelFormat);
+            int originalWidth = original.Width;
+            int originalHeight = original.Height;
+            int moddedWidth = (originalWidth + 1) / 2;
+            int moddedHeight = originalHeight;
+            byte lastColumnIsOdd = (byte)(originalWidth % 2);
+            Bitmap modded = new Bitmap(moddedWidth, moddedHeight, original.PixelFormat);
 
-            BitmapData bdOriginal = original.LockBits(new Rectangle(0, 0, original.Width, original.Height),
+            BitmapData bdOriginal = original.LockBits(new Rectangle(0, 0, originalWidth, originalHeight),
                                                       ImageLockMode.ReadOnly,
                                                       PixelFormat.Format32bppArgb);
-            int[ ] bitsOriginal = new int[bdOriginal.Stride / 4 * bdOriginal.Height];
+            int[ ] bitsOriginal = new int[originalWidth * originalHeight];
             Marshal.Copy(bdOriginal.Scan0, bitsOriginal, 0, bitsOriginal.Length);
             // --/--
-            BitmapData bdModded = modded.LockBits(new Rectangle(0, 0, modded.Width, modded.Height),
+            BitmapData bdModded = modded.LockBits(new Rectangle(0, 0, moddedWidth, moddedHeight),
                                                   ImageLockMode.ReadWrite,
                                                   PixelFormat.Format32bppArgb);
-            int[ ] bitsModded = new int[bdModded.Stride / 4 * bdModded.Height];
+            int[ ] bitsModded = new int[moddedWidth * moddedHeight];
             Marshal.Copy(bdModded.Scan0, bitsModded, 0, bitsModded.Length);
 
-            int width = modded.Width;
-            int height = modded.Height;
-            int originalWidth = original.Width;
-
-            for (int i = 0; i < height; i += 2)
+            for (int i = 0; i < moddedHeight; i += 2)
             {
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < moddedWidth; j++)
                 {
-                    bitsModded[i * width + j] = bitsOriginal[i * width * 2 + j * 2];
+                    bitsModded[i * moddedWidth + j] = bitsOriginal[i * moddedWidth * 2 + j * 2];
                     if ((j * 2 + 1)< originalWidth)
                     {
-                        bitsModded[(i + 1) * width + j] = bitsOriginal[(i + 1) * width * 2 + j * 2 + 1];
+                        bitsModded[(i + 1) * moddedWidth + j] = bitsOriginal[(i + 1) * moddedWidth * 2 + j * 2 + 1];
                     }
                 }
             }
@@ -72,6 +82,12 @@ namespace ImageProcessingOnSharp
             return compressedImage;
         }
 
+        /// <summary>
+        /// Inverse application of the algorithm
+        /// </summary>
+        /// <param name="parCompressedImage">Compressed image stream</param>
+        /// <param name="parArguments">List of an arguments (ImageFormat finalFormat)</param>
+        /// <returns>Decompressed image stream</returns>
         public override Stream DecompressImage(Stream parCompressedImage, List<object> parArguments)
         {
             GZIP gzip = GZIP.GetInstance();
@@ -82,8 +98,10 @@ namespace ImageProcessingOnSharp
             interlacedImage.SetLength(interlacedImage.Length - 1);
 
             Bitmap interlaced = new Bitmap(interlacedImage);
-            int reconstructedWidth = interlaced.Width * 2;
-            int reconstructedHeight = interlaced.Height;
+            int interlacedWidth = interlaced.Width;
+            int interlacedHeight = interlaced.Height;
+            int reconstructedWidth = interlacedWidth * 2;
+            int reconstructedHeight = interlacedHeight;
             if (lastColumnIsOdd)
             {
                 reconstructedWidth--;
@@ -91,33 +109,30 @@ namespace ImageProcessingOnSharp
 
             Bitmap reconstructed = new Bitmap(reconstructedWidth, reconstructedHeight, interlaced.PixelFormat);
 
-            BitmapData bdInterlaced = interlaced.LockBits(new Rectangle(0, 0, interlaced.Width, interlaced.Height),
+            BitmapData bdInterlaced = interlaced.LockBits(new Rectangle(0, 0, interlacedWidth, interlacedHeight),
                                                           ImageLockMode.ReadOnly,
                                                           PixelFormat.Format32bppArgb);
-            int[ ] bitsInterlaced = new int[bdInterlaced.Stride / 4 * bdInterlaced.Height];
+            int[ ] bitsInterlaced = new int[interlacedWidth * interlacedHeight];
             Marshal.Copy(bdInterlaced.Scan0, bitsInterlaced, 0, bitsInterlaced.Length);
             // --/--
-            BitmapData bdReconstructed = reconstructed.LockBits(new Rectangle(0, 0, reconstructed.Width, reconstructed.Height),
+            BitmapData bdReconstructed = reconstructed.LockBits(new Rectangle(0, 0, reconstructedWidth, reconstructedHeight),
                                                                 ImageLockMode.ReadWrite,
                                                                 PixelFormat.Format32bppArgb);
-            int[ ] bitsReconstructed = new int[bdReconstructed.Stride / 4 * bdReconstructed.Height];
+            int[ ] bitsReconstructed = new int[reconstructedWidth * reconstructedHeight];
             Marshal.Copy(bdReconstructed.Scan0, bitsReconstructed, 0, bitsReconstructed.Length);
-            
-            int width = interlaced.Width;
-            int height = interlaced.Height;
 
-            for (int i = 0; i < height; i += 2)
+            for (int i = 0; i < interlacedHeight; i += 2)
             {
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < interlacedWidth; j++)
                 {
-                    bitsReconstructed[i * reconstructedWidth + j * 2] = bitsInterlaced[i * width + j];
+                    bitsReconstructed[i * reconstructedWidth + j * 2] = bitsInterlaced[i * interlacedWidth + j];
                     if ((j * 2 + 1) < reconstructedWidth)
                     {
-                        bitsReconstructed[(i + 1) * reconstructedWidth + j * 2 + 1] = bitsInterlaced[(i + 1) * width + j];
+                        bitsReconstructed[(i + 1) * reconstructedWidth + j * 2 + 1] = bitsInterlaced[(i + 1) * interlacedWidth + j];
                     }
                 }
             }
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < interlacedHeight; i++)
             {
                 int offset = (i + 1) % 2;
                 for (int j = offset; j < reconstructedWidth; j += 2)
@@ -127,7 +142,7 @@ namespace ImageProcessingOnSharp
                     {
                         pixels.Add(bitsReconstructed[(i - 1) * reconstructedWidth + j]);
                     }
-                    if ((i + 1) < height)
+                    if ((i + 1) < interlacedHeight)
                     {
                         pixels.Add(bitsReconstructed[(i + 1) * reconstructedWidth + j]);
                     }
@@ -172,11 +187,19 @@ namespace ImageProcessingOnSharp
             return resultColor.ToArgb();
         }
 
+        /// <summary>
+        /// Returns file extension of algorithm inverse application result
+        /// </summary>
+        /// <returns>Extension without dot (string)</returns>
         public override string GetFileExtension()
         {
             return "bmp";
         }
 
+        /// <summary>
+        /// Overrides original ToString() method
+        /// </summary>
+        /// <returns>Algorithm name</returns>
         public override string ToString()
         {
             return "XInterlacing+GZIP";

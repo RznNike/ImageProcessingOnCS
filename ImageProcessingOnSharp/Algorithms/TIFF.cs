@@ -15,7 +15,11 @@ namespace ImageProcessingOnSharp
         private TIFF()
         {
         }
-        
+
+        /// <summary>
+        /// Returns singletone instance
+        /// </summary>
+        /// <returns>Instance</returns>
         public static TIFF GetInstance()
         {
             if (_instance == null)
@@ -25,6 +29,12 @@ namespace ImageProcessingOnSharp
             return _instance;
         }
 
+        /// <summary>
+        /// Forward application of the algorithm
+        /// </summary>
+        /// <param name="parOriginalImage">Original image stream</param>
+        /// <param name="parArguments">List of an arguments (int compression)</param>
+        /// <returns>Compressed image stream</returns>
         public override Stream CompressImage(Stream parOriginalImage, List<object> parArguments)
         {
             Stream result = new MemoryStream();
@@ -38,30 +48,43 @@ namespace ImageProcessingOnSharp
             {
                 TiffBitmapEncoder encoder = new TiffBitmapEncoder();
                 encoder.Compression = (TiffCompressOption)compression;
-                BitmapSource originalBMsource =
-                    System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
-                        original.GetHbitmap(),
-                        IntPtr.Zero,
-                        Int32Rect.Empty,
-                        BitmapSizeOptions.FromEmptyOptions());
-                WriteableBitmap writableBMoriginal = new WriteableBitmap(originalBMsource);
-                encoder.Frames.Add(BitmapFrame.Create(writableBMoriginal));
+                BitmapSource bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+                    original.GetHbitmap(),
+                    IntPtr.Zero,
+                    Int32Rect.Empty,
+                    BitmapSizeOptions.FromEmptyOptions());
+                WriteableBitmap writableBitmap = new WriteableBitmap(bitmapSource);
+                encoder.Frames.Add(BitmapFrame.Create(writableBitmap));
                 encoder.Save(result);
             }
             
             return result;
         }
 
+        /// <summary>
+        /// Inverse application of the algorithm
+        /// </summary>
+        /// <param name="parCompressedImage">Compressed image stream</param>
+        /// <param name="parArguments">List of an arguments (empty)</param>
+        /// <returns>Decompressed image stream</returns>
         public override Stream DecompressImage(Stream parCompressedImage, List<object> parArguments)
         {
             return parCompressedImage;
         }
 
+        /// <summary>
+        /// Returns file extension of algorithm inverse application result
+        /// </summary>
+        /// <returns>Extension without dot (string)</returns>
         public override string GetFileExtension()
         {
             return "tif";
         }
 
+        /// <summary>
+        /// Overrides original ToString() method
+        /// </summary>
+        /// <returns>Algorithm name</returns>
         public override string ToString()
         {
             return "TIFF";
