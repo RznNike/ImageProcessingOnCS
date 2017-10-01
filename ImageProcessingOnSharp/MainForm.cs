@@ -19,6 +19,9 @@ namespace ImageProcessingOnSharp
         private string _originalExtension = null;
         private string _resultExtension = null;
         private Hashtable _panels = null;
+        private DateTime _time = new DateTime();
+        double _compressingTime = 0;
+        double _decompressingTime = 0;
 
         /// <summary>
         /// Main form constructor
@@ -159,56 +162,80 @@ namespace ImageProcessingOnSharp
             if (option.Equals("JPEG"))
             {
                 long qualityLevel = (long)nudQualityLevel.Value;
+                _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
+                _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
                 parameters = string.Format("quality = {0}%.", qualityLevel);
+                _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
+                _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
             else if (option.Equals("PNG"))
             {
+                _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { });
+                _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
                 parameters = "-";
+                _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
+                _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
             else if (option.Equals("TIFF"))
             {
                 int compression = cmbCompression.SelectedIndex;
+                _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression });
+                _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
                 parameters = string.Format("compression = {0}.", cmbCompression.Items[compression].ToString());
+                _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
+                _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
             else if (option.Equals("GZIP"))
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
+                _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
+                _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
                 parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString().ToLower());
                 _resultExtension = _originalExtension;
+                _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
+                _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
             else if (option.Equals("HInterlacing+GZIP")
                      || option.Equals("VInterlacing+GZIP")
                      || option.Equals("XInterlacing+GZIP"))
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
+                _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel, interimFormat });
+                _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
                 parameters = string.Format("compression level = {0}; interim format = {1}; final format = {2}.",
                     cmbCompressionLevel.Items[compressionLevel].ToString().ToLower(),
                     interimFormat.ToString().ToLower(),
                     finalFormat.ToString().ToLower());
                 _resultExtension = cmbFinalFormat.SelectedItem.ToString().ToLower();
+                _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { finalFormat });
+                _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
             else if (option.Equals("Wavelet+GZIP"))
             {
                 int waveletLevels = (int)nudWaveletLevels.Value;
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
+                _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { waveletLevels, compressionLevel, interimFormat });
+                _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
                 parameters = string.Format("wavelet levels = {0}; compression level = {1}; interim format = {2}; final format = {3}.",
                     waveletLevels,
                     cmbCompressionLevel.Items[compressionLevel].ToString().ToLower(),
                     interimFormat.ToString().ToLower(),
                     finalFormat.ToString().ToLower());
                 _resultExtension = cmbFinalFormat.SelectedItem.ToString().ToLower();
+                _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { waveletLevels, finalFormat });
+                _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
             
             rtbStatistic.Text = this.MakeReport(compressedImage, parameters);
@@ -226,7 +253,9 @@ namespace ImageProcessingOnSharp
             report.AppendLine(String.Format("Algorithm: {0}", cmbAlgorithm.SelectedItem));
             report.AppendLine(String.Format("Parameters: {0}", parAlgorithmParameters));
             double accuracy = ImageComparator.CalculateImagesEquality(_originalImage, _resultImage);
-            report.Append(String.Format("Accuracy: {0}%", accuracy * 100));
+            report.AppendLine(String.Format("Accuracy: {0}%", accuracy * 100));
+            report.AppendLine(String.Format("Compressing time: {0} ms", _compressingTime));
+            report.Append(String.Format("Decompressing time: {0} ms", _decompressingTime));
 
             return report.ToString();
         }

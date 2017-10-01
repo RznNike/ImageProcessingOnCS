@@ -186,7 +186,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 125F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(774, 512);
             this.tableLayoutPanel1.TabIndex = 14;
             // 
@@ -195,9 +195,9 @@
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox1, 5);
             this.groupBox1.Controls.Add(this.rtbStatistic);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 390);
+            this.groupBox1.Location = new System.Drawing.Point(3, 365);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(768, 119);
+            this.groupBox1.Size = new System.Drawing.Size(768, 144);
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Statistic:";
@@ -209,7 +209,7 @@
             this.rtbStatistic.Name = "rtbStatistic";
             this.rtbStatistic.ReadOnly = true;
             this.rtbStatistic.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.ForcedVertical;
-            this.rtbStatistic.Size = new System.Drawing.Size(762, 100);
+            this.rtbStatistic.Size = new System.Drawing.Size(762, 125);
             this.rtbStatistic.TabIndex = 1;
             this.rtbStatistic.Text = "";
             // 
@@ -220,7 +220,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(360, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 287);
+            this.label1.Size = new System.Drawing.Size(54, 262);
             this.label1.TabIndex = 15;
             this.label1.Text = "→";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -232,7 +232,7 @@
             this.pboxOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pboxOriginal.Location = new System.Drawing.Point(3, 3);
             this.pboxOriginal.Name = "pboxOriginal";
-            this.pboxOriginal.Size = new System.Drawing.Size(351, 281);
+            this.pboxOriginal.Size = new System.Drawing.Size(351, 256);
             this.pboxOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pboxOriginal.TabIndex = 16;
             this.pboxOriginal.TabStop = false;
@@ -244,7 +244,7 @@
             this.pboxResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pboxResult.Location = new System.Drawing.Point(420, 3);
             this.pboxResult.Name = "pboxResult";
-            this.pboxResult.Size = new System.Drawing.Size(351, 281);
+            this.pboxResult.Size = new System.Drawing.Size(351, 256);
             this.pboxResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pboxResult.TabIndex = 17;
             this.pboxResult.TabStop = false;
@@ -254,7 +254,7 @@
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(3, 287);
+            this.label2.Location = new System.Drawing.Point(3, 262);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 40);
             this.label2.TabIndex = 18;
@@ -265,7 +265,7 @@
             // 
             this.btnLoad.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnLoad.Location = new System.Drawing.Point(95, 290);
+            this.btnLoad.Location = new System.Drawing.Point(95, 265);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(259, 34);
             this.btnLoad.TabIndex = 19;
@@ -278,7 +278,7 @@
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(420, 287);
+            this.label3.Location = new System.Drawing.Point(420, 262);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(86, 40);
             this.label3.TabIndex = 20;
@@ -289,7 +289,7 @@
             // 
             this.btnApplyAlgorithm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnApplyAlgorithm.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnApplyAlgorithm.Location = new System.Drawing.Point(512, 290);
+            this.btnApplyAlgorithm.Location = new System.Drawing.Point(512, 265);
             this.btnApplyAlgorithm.Name = "btnApplyAlgorithm";
             this.btnApplyAlgorithm.Size = new System.Drawing.Size(259, 34);
             this.btnApplyAlgorithm.TabIndex = 21;
@@ -303,7 +303,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox2, 5);
             this.groupBox2.Controls.Add(this.flowLayoutPanel1);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 330);
+            this.groupBox2.Location = new System.Drawing.Point(3, 305);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(768, 54);
             this.groupBox2.TabIndex = 22;
