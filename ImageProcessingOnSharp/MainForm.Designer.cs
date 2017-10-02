@@ -45,7 +45,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.btnApplyAlgorithm = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.flowLayoutPanelOptions = new System.Windows.Forms.FlowLayoutPanel();
             this.panelAlgorithm = new System.Windows.Forms.Panel();
             this.cmbAlgorithm = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -68,13 +68,15 @@
             this.cmbFinalFormat = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.tsmGroupAnalysis = new System.Windows.Forms.ToolStripMenuItem();
+            this.progressBarGroupProcessing = new System.Windows.Forms.ProgressBar();
             this.menuStrip.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pboxOriginal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxResult)).BeginInit();
             this.groupBox2.SuspendLayout();
-            this.flowLayoutPanel1.SuspendLayout();
+            this.flowLayoutPanelOptions.SuspendLayout();
             this.panelAlgorithm.SuspendLayout();
             this.panelQuality.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudQualityLevel)).BeginInit();
@@ -142,7 +144,8 @@
             // tsActions
             // 
             this.tsActions.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.tsmApplyAlgorithm});
+            this.tsmApplyAlgorithm,
+            this.tsmGroupAnalysis});
             this.tsActions.Name = "tsActions";
             this.tsActions.Size = new System.Drawing.Size(59, 20);
             this.tsActions.Text = "Actions";
@@ -179,14 +182,16 @@
             this.tableLayoutPanel1.Controls.Add(this.label3, 3, 1);
             this.tableLayoutPanel1.Controls.Add(this.btnApplyAlgorithm, 4, 1);
             this.tableLayoutPanel1.Controls.Add(this.groupBox2, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.progressBarGroupProcessing, 0, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 24);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 150F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(774, 512);
             this.tableLayoutPanel1.TabIndex = 14;
             // 
@@ -195,7 +200,7 @@
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox1, 5);
             this.groupBox1.Controls.Add(this.rtbStatistic);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(3, 365);
+            this.groupBox1.Location = new System.Drawing.Point(3, 345);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(768, 144);
             this.groupBox1.TabIndex = 23;
@@ -220,7 +225,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 30F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(360, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 262);
+            this.label1.Size = new System.Drawing.Size(54, 242);
             this.label1.TabIndex = 15;
             this.label1.Text = "→";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -232,7 +237,7 @@
             this.pboxOriginal.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pboxOriginal.Location = new System.Drawing.Point(3, 3);
             this.pboxOriginal.Name = "pboxOriginal";
-            this.pboxOriginal.Size = new System.Drawing.Size(351, 256);
+            this.pboxOriginal.Size = new System.Drawing.Size(351, 236);
             this.pboxOriginal.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pboxOriginal.TabIndex = 16;
             this.pboxOriginal.TabStop = false;
@@ -244,7 +249,7 @@
             this.pboxResult.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pboxResult.Location = new System.Drawing.Point(420, 3);
             this.pboxResult.Name = "pboxResult";
-            this.pboxResult.Size = new System.Drawing.Size(351, 256);
+            this.pboxResult.Size = new System.Drawing.Size(351, 236);
             this.pboxResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pboxResult.TabIndex = 17;
             this.pboxResult.TabStop = false;
@@ -254,7 +259,7 @@
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(3, 262);
+            this.label2.Location = new System.Drawing.Point(3, 242);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 40);
             this.label2.TabIndex = 18;
@@ -265,7 +270,7 @@
             // 
             this.btnLoad.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnLoad.Location = new System.Drawing.Point(95, 265);
+            this.btnLoad.Location = new System.Drawing.Point(95, 245);
             this.btnLoad.Name = "btnLoad";
             this.btnLoad.Size = new System.Drawing.Size(259, 34);
             this.btnLoad.TabIndex = 19;
@@ -278,7 +283,7 @@
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(420, 262);
+            this.label3.Location = new System.Drawing.Point(420, 242);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(86, 40);
             this.label3.TabIndex = 20;
@@ -289,7 +294,7 @@
             // 
             this.btnApplyAlgorithm.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnApplyAlgorithm.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnApplyAlgorithm.Location = new System.Drawing.Point(512, 265);
+            this.btnApplyAlgorithm.Location = new System.Drawing.Point(512, 245);
             this.btnApplyAlgorithm.Name = "btnApplyAlgorithm";
             this.btnApplyAlgorithm.Size = new System.Drawing.Size(259, 34);
             this.btnApplyAlgorithm.TabIndex = 21;
@@ -301,29 +306,29 @@
             // groupBox2
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.groupBox2, 5);
-            this.groupBox2.Controls.Add(this.flowLayoutPanel1);
+            this.groupBox2.Controls.Add(this.flowLayoutPanelOptions);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox2.Location = new System.Drawing.Point(3, 305);
+            this.groupBox2.Location = new System.Drawing.Point(3, 285);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(768, 54);
             this.groupBox2.TabIndex = 22;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings:";
             // 
-            // flowLayoutPanel1
+            // flowLayoutPanelOptions
             // 
-            this.flowLayoutPanel1.Controls.Add(this.panelAlgorithm);
-            this.flowLayoutPanel1.Controls.Add(this.panelQuality);
-            this.flowLayoutPanel1.Controls.Add(this.panelCompression);
-            this.flowLayoutPanel1.Controls.Add(this.panelWaveletLevels);
-            this.flowLayoutPanel1.Controls.Add(this.panelCompressionLevel);
-            this.flowLayoutPanel1.Controls.Add(this.panelInterimFormat);
-            this.flowLayoutPanel1.Controls.Add(this.panelFinalFormat);
-            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(3, 16);
-            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(762, 35);
-            this.flowLayoutPanel1.TabIndex = 0;
+            this.flowLayoutPanelOptions.Controls.Add(this.panelAlgorithm);
+            this.flowLayoutPanelOptions.Controls.Add(this.panelQuality);
+            this.flowLayoutPanelOptions.Controls.Add(this.panelCompression);
+            this.flowLayoutPanelOptions.Controls.Add(this.panelWaveletLevels);
+            this.flowLayoutPanelOptions.Controls.Add(this.panelCompressionLevel);
+            this.flowLayoutPanelOptions.Controls.Add(this.panelInterimFormat);
+            this.flowLayoutPanelOptions.Controls.Add(this.panelFinalFormat);
+            this.flowLayoutPanelOptions.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanelOptions.Location = new System.Drawing.Point(3, 16);
+            this.flowLayoutPanelOptions.Name = "flowLayoutPanelOptions";
+            this.flowLayoutPanelOptions.Size = new System.Drawing.Size(762, 35);
+            this.flowLayoutPanelOptions.TabIndex = 0;
             // 
             // panelAlgorithm
             // 
@@ -543,6 +548,25 @@
             this.label10.TabIndex = 0;
             this.label10.Text = "Final format:";
             // 
+            // tsmGroupAnalysis
+            // 
+            this.tsmGroupAnalysis.Name = "tsmGroupAnalysis";
+            this.tsmGroupAnalysis.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.tsmGroupAnalysis.Size = new System.Drawing.Size(202, 22);
+            this.tsmGroupAnalysis.Text = "Group analysis";
+            this.tsmGroupAnalysis.Click += new System.EventHandler(this.tsmGroupAnalysis_Click);
+            // 
+            // progressBarGroupProcessing
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.progressBarGroupProcessing, 5);
+            this.progressBarGroupProcessing.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.progressBarGroupProcessing.Location = new System.Drawing.Point(3, 495);
+            this.progressBarGroupProcessing.Maximum = 1000;
+            this.progressBarGroupProcessing.Name = "progressBarGroupProcessing";
+            this.progressBarGroupProcessing.Size = new System.Drawing.Size(768, 14);
+            this.progressBarGroupProcessing.Step = 1;
+            this.progressBarGroupProcessing.TabIndex = 24;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -563,8 +587,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pboxOriginal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pboxResult)).EndInit();
             this.groupBox2.ResumeLayout(false);
-            this.flowLayoutPanel1.ResumeLayout(false);
-            this.flowLayoutPanel1.PerformLayout();
+            this.flowLayoutPanelOptions.ResumeLayout(false);
+            this.flowLayoutPanelOptions.PerformLayout();
             this.panelAlgorithm.ResumeLayout(false);
             this.panelAlgorithm.PerformLayout();
             this.panelQuality.ResumeLayout(false);
@@ -606,7 +630,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ToolStripMenuItem tsActions;
         private System.Windows.Forms.ToolStripMenuItem tsmApplyAlgorithm;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelOptions;
         private System.Windows.Forms.Panel panelAlgorithm;
         private System.Windows.Forms.ComboBox cmbAlgorithm;
         private System.Windows.Forms.Label label4;
@@ -632,6 +656,8 @@
         private System.Windows.Forms.Panel panelWaveletLevels;
         private System.Windows.Forms.NumericUpDown nudWaveletLevels;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ToolStripMenuItem tsmGroupAnalysis;
+        private System.Windows.Forms.ProgressBar progressBarGroupProcessing;
     }
 }
 

@@ -12,7 +12,7 @@ namespace ImageProcessingOnSharp
     public static class ImageComparator
     {
         /// <summary>
-        /// Comparation pf two images pixel by pixel
+        /// Comparation of two images pixel by pixel
         /// </summary>
         /// <param name="parImageOriginal">First image stream</param>
         /// <param name="parImageModded">Second image stream</param>

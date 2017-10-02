@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ImageProcessingOnSharp
@@ -16,12 +17,17 @@ namespace ImageProcessingOnSharp
     {
         private Stream _originalImage = null;
         private Stream _resultImage = null;
+        private double _compression = 0;
         private string _originalExtension = null;
         private string _resultExtension = null;
         private Hashtable _panels = null;
         private DateTime _time = new DateTime();
-        double _compressingTime = 0;
-        double _decompressingTime = 0;
+        private double _compressingTime = 0;
+        private double _decompressingTime = 0;
+        private bool _groupReporting = true;
+        private string _algorithm = null;
+        private string _algorithmParameters = null;
+
 
         /// <summary>
         /// Main form constructor
@@ -101,6 +107,7 @@ namespace ImageProcessingOnSharp
 
         private void tsmOpenImage_Click(object sender, EventArgs e)
         {
+            openFileDialog.Multiselect = false;
             DialogResult choice = openFileDialog.ShowDialog();
             if (choice == DialogResult.OK)
             {
@@ -152,66 +159,66 @@ namespace ImageProcessingOnSharp
             }
 
             Algorithm algorithm = (Algorithm)cmbAlgorithm.SelectedItem;
-            string option = algorithm.ToString();
-            string parameters = "";
+            _algorithm = algorithm.ToString();
+            _algorithmParameters = "";
             Stream compressedImage = null;
             _resultExtension = algorithm.GetFileExtension();
             object finalFormat = cmbFinalFormat.SelectedItem;
             object interimFormat = cmbInterimFormat.SelectedItem;
 
-            if (option.Equals("JPEG"))
+            if (_algorithm.Equals("JPEG"))
             {
                 long qualityLevel = (long)nudQualityLevel.Value;
                 _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { qualityLevel });
                 _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
-                parameters = string.Format("quality = {0}%.", qualityLevel);
+                _algorithmParameters = string.Format("quality = {0}%.", qualityLevel);
                 _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
                 _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
-            else if (option.Equals("PNG"))
+            else if (_algorithm.Equals("PNG"))
             {
                 _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { });
                 _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
-                parameters = "-";
+                _algorithmParameters = "-";
                 _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
                 _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
-            else if (option.Equals("TIFF"))
+            else if (_algorithm.Equals("TIFF"))
             {
                 int compression = cmbCompression.SelectedIndex;
                 _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compression });
                 _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
-                parameters = string.Format("compression = {0}.", cmbCompression.Items[compression].ToString());
+                _algorithmParameters = string.Format("compression = {0}.", cmbCompression.Items[compression].ToString());
                 _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
                 _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
-            else if (option.Equals("GZIP"))
+            else if (_algorithm.Equals("GZIP"))
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel });
                 _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
-                parameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString().ToLower());
+                _algorithmParameters = string.Format("compression level = {0}.", cmbCompressionLevel.Items[compressionLevel].ToString().ToLower());
                 _resultExtension = _originalExtension;
                 _time = DateTime.UtcNow;
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { });
                 _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
-            else if (option.Equals("HInterlacing+GZIP")
-                     || option.Equals("VInterlacing+GZIP")
-                     || option.Equals("XInterlacing+GZIP"))
+            else if (_algorithm.Equals("HInterlacing+GZIP")
+                     || _algorithm.Equals("VInterlacing+GZIP")
+                     || _algorithm.Equals("XInterlacing+GZIP"))
             {
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { compressionLevel, interimFormat });
                 _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
-                parameters = string.Format("compression level = {0}; interim format = {1}; final format = {2}.",
+                _algorithmParameters = string.Format("compression level = {0}; interim format = {1}; final format = {2}.",
                     cmbCompressionLevel.Items[compressionLevel].ToString().ToLower(),
                     interimFormat.ToString().ToLower(),
                     finalFormat.ToString().ToLower());
@@ -220,14 +227,14 @@ namespace ImageProcessingOnSharp
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { finalFormat });
                 _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
-            else if (option.Equals("Wavelet+GZIP"))
+            else if (_algorithm.Equals("Wavelet+GZIP"))
             {
                 int waveletLevels = (int)nudWaveletLevels.Value;
                 int compressionLevel = cmbCompressionLevel.SelectedIndex;
                 _time = DateTime.UtcNow;
                 compressedImage = algorithm.CompressImage(_originalImage, new List<object>() { waveletLevels, compressionLevel, interimFormat });
                 _compressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
-                parameters = string.Format("wavelet levels = {0}; compression level = {1}; interim format = {2}; final format = {3}.",
+                _algorithmParameters = string.Format("wavelet levels = {0}; compression level = {1}; interim format = {2}; final format = {3}.",
                     waveletLevels,
                     cmbCompressionLevel.Items[compressionLevel].ToString().ToLower(),
                     interimFormat.ToString().ToLower(),
@@ -237,21 +244,24 @@ namespace ImageProcessingOnSharp
                 _resultImage = algorithm.DecompressImage(compressedImage, new List<object>() { waveletLevels, finalFormat });
                 _decompressingTime = (DateTime.UtcNow - _time).TotalMilliseconds;
             }
-            
-            rtbStatistic.Text = this.MakeReport(compressedImage, parameters);
-            pboxResult.Image = new Bitmap(_resultImage);
+
+            _compression = (_originalImage.Length - compressedImage.Length) * 100.0 / _originalImage.Length;
+            if (!_groupReporting)
+            {
+                rtbStatistic.Text = this.MakeReport(compressedImage);
+                pboxResult.Image = new Bitmap(_resultImage);
+            }
         }
 
-        private string MakeReport(Stream parCompressedImage, string parAlgorithmParameters)
+        private string MakeReport(Stream parCompressedImage)
         {
             StringBuilder report = new StringBuilder();
             report.AppendLine(String.Format("Original image size: {0} bytes", _originalImage.Length));
             report.AppendLine(String.Format("Compressed image size: {0} bytes", parCompressedImage.Length));
             report.AppendLine(String.Format("Decompressed image size: {0} bytes", _resultImage.Length));
-            double compression = (_originalImage.Length - parCompressedImage.Length) * 100.0 / _originalImage.Length;
-            report.AppendLine(String.Format("Total compression: {0}%", compression));
-            report.AppendLine(String.Format("Algorithm: {0}", cmbAlgorithm.SelectedItem));
-            report.AppendLine(String.Format("Parameters: {0}", parAlgorithmParameters));
+            report.AppendLine(String.Format("Total compression: {0}%", _compression));
+            report.AppendLine(String.Format("Algorithm: {0}", _algorithm));
+            report.AppendLine(String.Format("Parameters: {0}", _algorithmParameters));
             double accuracy = ImageComparator.CalculateImagesEquality(_originalImage, _resultImage);
             report.AppendLine(String.Format("Accuracy: {0}%", accuracy * 100));
             report.AppendLine(String.Format("Compressing time: {0} ms", _compressingTime));
@@ -284,6 +294,87 @@ namespace ImageProcessingOnSharp
         {
             AboutForm form = new AboutForm();
             form.ShowDialog();
+        }
+
+        private void tsmGroupAnalysis_Click(object sender, EventArgs e)
+        {
+            openFileDialog.Multiselect = true;
+            DialogResult choice = openFileDialog.ShowDialog();
+            if (choice == DialogResult.OK)
+            {
+                Thread processingThread = new Thread(ApplyAlgorithmToGroup);
+                processingThread.Start();
+            }
+        }
+
+        private delegate void Del(object sender, EventArgs e);
+
+        private void ApplyAlgorithmToGroup()
+        {
+            _groupReporting = true;
+
+            string[ ] names = openFileDialog.FileNames;
+            int processedCount = 0;
+            double averageCompression = 0;
+            double averageAccuracy = 0;
+            double averageCompressingTime = 0;
+            double averageDecompressingTime = 0;
+
+            for (int i = 0; i < names.Length; i++)
+            {
+                try
+                {
+                    _originalImage = new MemoryStream(File.ReadAllBytes(names[i]));
+                    Del del = tsmApplyAlgorithm_Click;
+                    this.Invoke(del, null, null);
+
+                    averageCompression += _compression;
+                    averageAccuracy += ImageComparator.CalculateImagesEquality(_originalImage, _resultImage);
+                    averageCompressingTime += _compressingTime;
+                    averageDecompressingTime += _decompressingTime;
+                    processedCount++;
+                }
+                catch
+                {
+                }
+
+                this.rtbStatistic.BeginInvoke((MethodInvoker)
+                    (() => this.rtbStatistic.Text = $"Processed images: {processedCount}"));
+                this.progressBarGroupProcessing.BeginInvoke((MethodInvoker)
+                    (() => this.progressBarGroupProcessing.Value = (int)(i * 1000.0 / names.Length)));
+            }
+            averageCompression /= processedCount;
+            averageAccuracy /= processedCount;
+            averageCompressingTime /= processedCount;
+            averageDecompressingTime /= processedCount;
+
+            string report = MakeGroupReport(processedCount, averageCompression, averageAccuracy,
+                averageCompressingTime, averageDecompressingTime);
+            this.rtbStatistic.BeginInvoke((MethodInvoker)
+                (() => this.rtbStatistic.Text = report));
+
+            this.progressBarGroupProcessing.BeginInvoke((MethodInvoker)
+                    (() => this.progressBarGroupProcessing.Value = 0));
+
+            Thread.Sleep(300);
+            _groupReporting = false;
+
+            GC.Collect();
+        }
+
+        private string MakeGroupReport(int parProcessedCount, double parAverageCompression, double parAverageAccuracy,
+            double parAverageCompressingTime, double parAverageDecompressingTime)
+        {
+            StringBuilder report = new StringBuilder();
+            report.AppendLine(String.Format("Algorithm: {0}", _algorithm));
+            report.AppendLine(String.Format("Parameters: {0}", _algorithmParameters));
+            report.AppendLine(String.Format("Processed images: {0}", parProcessedCount));
+            report.AppendLine(String.Format("Average compression: {0}%", parAverageCompression));
+            report.AppendLine(String.Format("Average accuracy: {0}%", parAverageAccuracy * 100));
+            report.AppendLine(String.Format("Average compressing time: {0} ms", parAverageCompressingTime));
+            report.Append(String.Format("Average decompressing time: {0} ms", parAverageDecompressingTime));
+
+            return report.ToString();
         }
     }
 }
